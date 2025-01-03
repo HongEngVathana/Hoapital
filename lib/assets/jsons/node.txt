@@ -1,0 +1,2 @@
+lib/assets/jsons/welcome_data.json  => welcome_data.json this is file data json welcome page
+lib/assets/jsons/lottie_data.json =>  lottie_data is Animation data the frist screen in this app
