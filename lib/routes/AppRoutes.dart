@@ -1,16 +1,15 @@
 // import 'package:flutter/material.dart';
 // import 'features/auth/views/login_screen.dart';
-// import 'features/dashboard/views/home_screen.dart'; 
-// import 'features/profile/views/profile_screen.dart'; 
-// import 'features/settings/views/settings_screen.dart'; 
+// import 'features/dashboard/views/home_screen.dart';
+// import 'features/profile/views/profile_screen.dart';
+// import 'features/settings/views/settings_screen.dart';
 
 // class AppRoutes {
- 
+
 //   static const String login = '/login';
 //   static const String home = '/home';
 //   static const String profile = '/profile';
 //   static const String settings = '/settings';
-
 
 //   static Route? generateRoute(RouteSettings settings) {
 //     switch (settings.name) {
@@ -27,6 +26,43 @@
 //     }
 //   }
 // }
+
+import 'package:flutter/material.dart';
+import 'package:hospital/features/auth/views/lottie_screen.dart';
+import 'package:hospital/pages/history_page.dart';
+import 'package:hospital/pages/home_page.dart';
+import 'package:hospital/pages/profile_page.dart';
+import 'package:hospital/pages/schedule_page.dart';
+import 'package:hospital/pages/todolist_page.dart';
+
+class Approutes {
+  static const String litties = '/litties';
+  static const String homes = '/homes';
+  static const String todos = '/todos';
+  static const String schedules = '/schedule';
+  static const String historys = '/historys';
+  static const String profiles = '/profiles';
+
+  static Route? generateRoute(RouteSettings settings) {
+    switch (settings.name) {
+      case litties:
+        return MaterialPageRoute(builder: (_) => LottieScreen());
+      case homes:
+        return MaterialPageRoute(builder: (_) => HomePage());
+      case todos:
+        return MaterialPageRoute(builder: (_) => TodolistPage());
+      case schedules:
+        return MaterialPageRoute(builder: (_) => SchedulePage());
+      case historys:
+        return MaterialPageRoute(builder: (_) => HistoryPage());
+      case profiles:
+        return MaterialPageRoute(builder: (_) => ProfilePage());
+      default:
+        return null;
+    }
+  }
+}
+
 
 // this page is Use for Routes page  
 
