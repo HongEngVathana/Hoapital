@@ -1,0 +1,61 @@
+import 'package:flutter/material.dart';
+import 'package:hospital/core/constants/app_colors.dart';
+import 'package:hospital/core/constants/app_fonts.dart';
+import 'package:hospital/routes/AppRoutes.dart';
+import 'package:lottie/lottie.dart';
+
+class UserinformationScreen extends StatefulWidget {
+  const UserinformationScreen({super.key});
+
+  @override
+  State<UserinformationScreen> createState() => _LottieScreenState();
+}
+
+class _LottieScreenState extends State<UserinformationScreen> {
+  @override
+  void initState() {
+    super.initState();
+    _navigateToHome();
+  }
+
+  void _navigateToHome() async {
+    await Future.delayed(const Duration(seconds: 2));
+    // ignore: use_build_context_synchronously
+    Navigator.pushReplacementNamed(context, Approutes.welcomes);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppColors.primary,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          _Littietitle(),
+          _LittieAnnimation(),
+        ],
+      ),
+    );
+  }
+
+  // ignore: non_constant_identifier_names
+  Widget _Littietitle() {
+    return Center(
+      child: Text(
+        "Simpaz Heath Welcome",
+        style: TextStyle(
+          fontSize: AppFonts.headingOne,
+          fontFamily: AppFonts.primaryFont,
+          color: AppColors.text,
+        ),
+      ),
+    );
+  }
+
+  // ignore: non_constant_identifier_names
+  Widget _LittieAnnimation() {
+    return Center(
+      child: Lottie.asset("lib/assets/jsons/lottie_data.json"),
+    );
+  }
+}

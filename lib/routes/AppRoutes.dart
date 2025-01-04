@@ -30,6 +30,7 @@
 import 'package:flutter/material.dart';
 import 'package:hospital/features/auth/views/login_screen.dart';
 import 'package:hospital/features/auth/views/lottie_screen.dart';
+import 'package:hospital/features/auth/views/userinformation_screen.dart';
 import 'package:hospital/features/auth/views/welcome_screen.dart';
 import 'package:hospital/pages/history_page.dart';
 import 'package:hospital/pages/home_page.dart';
@@ -41,6 +42,7 @@ class Approutes {
   static const String litties = '/litties';
   static const String logins = '/logins';
   static const String welcomes = '/welcomes';
+  static const String userinformations = '/userinformations';
   static const String homes = '/homes';
   static const String todos = '/todos';
   static const String schedules = '/schedule';
@@ -56,6 +58,8 @@ class Approutes {
         return MaterialPageRoute(builder: (_) => WelcomeScreen());
       case logins:
         return MaterialPageRoute(builder: (_) => LoginScreen());
+      case userinformations:
+        return MaterialPageRoute(builder: (_) => UserinformationScreen());
       case homes:
         return MaterialPageRoute(builder: (_) => HomePage());
       case todos:

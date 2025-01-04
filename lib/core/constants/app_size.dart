@@ -1,8 +1,15 @@
-class Appsizes {
-  static const double paddingSmall = 8.0;
-  static const double paddingMedium = 16.0;
-  static const double paddingLarge = 24.0;
+import 'package:flutter/material.dart';
 
-  static const double borderReadius = 12.0;
-  static const double iconSize = 32.0;
+class Appsizes {
+  static double paddingSmall(BuildContext context) =>
+      MediaQuery.of(context).size.width * 0.02; // 2% of screen width
+  static double paddingMedium(BuildContext context) =>
+      MediaQuery.of(context).size.width * 0.04; // 4% of screen width
+  static double paddingLarge(BuildContext context) =>
+      MediaQuery.of(context).size.width * 0.1; // 6% of screen width
+
+  static double borderRadius(BuildContext context) =>
+      MediaQuery.of(context).size.width * 0.03; // 3% of screen width
+  static double iconSize(BuildContext context) =>
+      MediaQuery.of(context).size.width * 0.08; // 8% of screen width
 }
