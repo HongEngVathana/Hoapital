@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hospital/core/constants/app_size.dart';
 import 'package:hospital/features/auth/models/userinformation_model.dart';
 import 'package:hospital/pages/home_page.dart';
+import 'package:hospital/pages/todolist_page.dart';
 import 'package:hospital/services/userinfromsion_service.dart';
 import 'package:hospital/widgets/custom_button.dart';
 
@@ -114,7 +115,7 @@ class _UserinformationformState extends State<Userinformationform> {
       // onPressed: _validateLogin,
       onPressed: () {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => HomePage()));
+            context, MaterialPageRoute(builder: (context) => TodolistPage()));
       },
     );
   }
