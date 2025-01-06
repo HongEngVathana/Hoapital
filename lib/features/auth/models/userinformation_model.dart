@@ -1,3 +1,4 @@
+// lib/models/user_information_model.dart
 class UserinformationModel {
   late String FirstName;
   late String LastName;
@@ -10,6 +11,7 @@ class UserinformationModel {
     this.Gender = "",
     this.DateOfBirth = "",
   });
+
   factory UserinformationModel.fromJson(Map<String, dynamic> json) {
     return UserinformationModel(
       FirstName: json['FirstName'] ?? '',
