@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hospital/features/auth/views/editProfile_screen.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -9,6 +11,27 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  Map<String, dynamic>? profileData;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadProfileData();
+  }
+
+  Future<void> _loadProfileData() async {
+    try {
+      final String response =
+          await rootBundle.loadString('lib/assets/jsons/userprofile_data.json');
+      final data = json.decode(response) as Map<String, dynamic>;
+      setState(() {
+        profileData = data;
+      });
+    } catch (e) {
+      print('Error loading profile data: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,42 +50,60 @@ class _ProfilePageState extends State<ProfilePage> {
             child: Stack(
               children: [
                 // Profile Info
-                Align(
-                  alignment: Alignment.center,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      CircleAvatar(
-                        radius: 50,
-                        backgroundColor: Colors.white,
-                        child: ClipOval(
-                          child: Image.asset(
-                            "lib/assets/images/joseph.jpeg",
-                            fit: BoxFit.cover,
-                            width: 90,
-                            height: 90,
-                          ),
+                profileData == null
+                    ? const Center(child: CircularProgressIndicator())
+                    : Align(
+                        alignment: Alignment.center,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            CircleAvatar(
+                              radius: 50,
+                              backgroundColor: Colors.white,
+                              child: ClipOval(
+                                child: Image.asset(
+                                  profileData!['image'],
+                                  fit: BoxFit.cover,
+                                  width: 90,
+                                  height: 90,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            Text(
+                              profileData!['name'],
+                              style: const TextStyle(
+                                fontSize: 22,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(height: 5),
+                            Text(
+                              '${profileData!['email']} | ${profileData!['phone']}',
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(color: Colors.white),
+                            ),
+                          ],
                         ),
                       ),
-                      const SizedBox(height: 10),
-                      const Text(
-                        "Chetra Pang",
-                        style: TextStyle(
-                          fontSize: 22,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
+                // Edit Icon
+                Positioned(
+                  top: 20,
+                  right: 20,
+                  child: IconButton(
+                    icon: const Icon(Icons.edit, color: Colors.white),
+                    onPressed: () {
+                      // Navigate to Edit Profile Screen
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PersonalInfoScreen(),
                         ),
-                      ),
-                      const SizedBox(height: 5),
-                      const Text(
-                        "chetra.pang.1222@gmail.com | +855 060 533004",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ],
+                      );
+                    },
                   ),
                 ),
-                // Edit Icon
               ],
             ),
           ),
@@ -76,7 +117,14 @@ class _ProfilePageState extends State<ProfilePage> {
                   context,
                   icon: Icons.edit,
                   title: "Edit profile information",
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => PersonalInfoScreen(),
+                      ),
+                    );
+                  },
                 ),
                 _buildOptionTile(
                   context,

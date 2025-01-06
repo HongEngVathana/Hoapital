@@ -1,5 +1,7 @@
-import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 class ImageSlider extends StatefulWidget {
   final Function(int) onChange;
@@ -16,37 +18,31 @@ class ImageSlider extends StatefulWidget {
 }
 
 class _ImageSliderState extends State<ImageSlider> {
-  late final PageController _pageController;
-  late Timer _timer;
-  final int _numSlides = 3; // Update to match the number of images
+  List<String> imagePaths = [];
 
   @override
   void initState() {
     super.initState();
-    _pageController = PageController(initialPage: widget.currentSlide);
-
-    // Set up a timer to auto-scroll every 3 seconds
-    _timer = Timer.periodic(Duration(seconds: 3), (Timer timer) {
-      int nextPage = (_pageController.page?.toInt() ?? 0) + 1;
-      if (nextPage >= _numSlides) {
-        nextPage = 0; // Loop back to the first slide
-      }
-      _pageController.animateToPage(
-        nextPage,
-        duration: Duration(milliseconds: 300),
-        curve: Curves.easeIn,
-      );
-      widget.onChange(nextPage); // Update the currentSlide in parent widget
-    });
+    _loadImagePaths(); // Load images from JSON
   }
 
-  @override
-  void dispose() {
-    _timer.cancel(); // Stop the timer when the widget is disposed
-    _pageController.dispose();
-    super.dispose();
+  Future<void> _loadImagePaths() async {
+    try {
+      // Load JSON data
+      final String response =
+          await rootBundle.loadString('lib/assets/jsons/imagesilder_dara.json');
+      final data = json.decode(response) as Map<String, dynamic>;
+
+      // Extract image paths
+      setState(() {
+        imagePaths = List<String>.from(data['images']);
+      });
+    } catch (e) {
+      print('Error loading images: $e');
+    }
   }
 
+// I chang Image to Json Image
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -56,45 +52,56 @@ class _ImageSliderState extends State<ImageSlider> {
           width: double.infinity,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(15),
-            child: PageView(
-              controller: _pageController,
-              scrollDirection: Axis.horizontal,
-              allowImplicitScrolling: true,
-              onPageChanged: widget.onChange,
-              physics: const ClampingScrollPhysics(),
-              children: [
-                Image.asset("lib/assets/images/banner1.jpg", fit: BoxFit.cover),
-                Image.asset("lib/assets/images/banner2.jpg", fit: BoxFit.cover),
-                Image.asset("lib/assets/images/banner3.jpg", fit: BoxFit.cover),
-              ],
-            ),
+            child: imagePaths.isEmpty
+                ? const Center(child: CircularProgressIndicator())
+                : CarouselSlider.builder(
+                    options: CarouselOptions(
+                      height: 220,
+                      autoPlay: true,
+                      autoPlayInterval: const Duration(seconds: 3),
+                      enlargeCenterPage: true,
+                      viewportFraction: 1.0,
+                      onPageChanged: (index, reason) {
+                        widget.onChange(index);
+                      },
+                    ),
+                    itemCount: imagePaths.length,
+                    itemBuilder: (context, index, realIndex) {
+                      return Image.asset(
+                        imagePaths[index],
+                        fit: BoxFit.cover,
+                        width: double.infinity,
+                      );
+                    },
+                  ),
           ),
         ),
-        Positioned.fill(
-          bottom: 10,
-          child: Align(
-            alignment: Alignment.bottomCenter,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(
-                _numSlides,
-                (index) => AnimatedContainer(
-                  duration: const Duration(milliseconds: 300),
-                  width: widget.currentSlide == index ? 15 : 8,
-                  height: 8,
-                  margin: const EdgeInsets.only(right: 3),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: widget.currentSlide == index
-                        ? Colors.black
-                        : Colors.transparent,
-                    border: Border.all(color: Colors.black),
+        if (imagePaths.isNotEmpty)
+          Positioned.fill(
+            bottom: 10,
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: List.generate(
+                  imagePaths.length,
+                  (index) => AnimatedContainer(
+                    duration: const Duration(milliseconds: 300),
+                    width: widget.currentSlide == index ? 15 : 8,
+                    height: 8,
+                    margin: const EdgeInsets.only(right: 3),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: widget.currentSlide == index
+                          ? Colors.black
+                          : Colors.transparent,
+                      border: Border.all(color: Colors.black),
+                    ),
                   ),
                 ),
               ),
             ),
           ),
-        ),
       ],
     );
   }
