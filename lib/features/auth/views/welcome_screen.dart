@@ -123,14 +123,14 @@ class _WelcomePageState extends State<WelcomePage> {
             children: [
               TextButton(
                 onPressed: () {
-                  Navigator.pushReplacementNamed(context, Approutes.logins);
+                  Navigator.pushReplacementNamed(context, Approutes.userinformations);
                 },
                 child: const Text("Skip"),
               ),
               TextButton(
                 onPressed: () {
                   if (_currentPage == widget.pages.length - 1) {
-                    Navigator.pushReplacementNamed(context, Approutes.logins);
+                    Navigator.pushReplacementNamed(context, Approutes.userinformations);
                   } else {
                     _pageController.nextPage(
                       duration: const Duration(milliseconds: 250),

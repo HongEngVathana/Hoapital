@@ -45,13 +45,11 @@ class _HomePageState extends State<HomePage> {
       }),
       Navigator(onGenerateRoute: (RouteSettings settings) {
         return MaterialPageRoute(
-          builder: (_) => const TodolistPage(),
+          builder: (_) => const SchedulePage(),
         );
       }),
       Navigator(onGenerateRoute: (RouteSettings settings) {
-        return MaterialPageRoute(
-          builder: (_) => const SchedulePage(),
-        );
+        return MaterialPageRoute(builder: (_) => const TodolistPage());
       }),
       Navigator(onGenerateRoute: (RouteSettings settings) {
         return MaterialPageRoute(
