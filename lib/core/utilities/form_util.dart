@@ -19,6 +19,54 @@ class FormUtil {
     return null;
   }
 
+  //Function to validate Usernames
+  static String? validateUserName(String? username) {
+    if (username == null || username.isEmpty) {
+      return "User Name cannot be empty ";
+    } else if (username.length < 2) {
+      return "User Name must be at least 2 characters! ";
+    }
+    return null;
+  }
+
+  //Function to validate Passwords
+
+  // Function to validate Password
+  static String? validatePassword(String? password) {
+    // Check if password is null or empty
+    if (password == null || password.isEmpty) {
+      return "Password cannot be empty!";
+    }
+
+    // Check for minimum length
+    if (password.length < 8) {
+      return "Password must be at least 8 characters long!";
+    }
+
+    // Check if password contains at least one uppercase letter
+    if (!password.contains(RegExp(r'[A-Z]'))) {
+      return "Password must contain at least one uppercase letter!";
+    }
+
+    // Check if password contains at least one lowercase letter
+    if (!password.contains(RegExp(r'[a-z]'))) {
+      return "Password must contain at least one lowercase letter!";
+    }
+
+    // Check if password contains at least one digit
+    if (!password.contains(RegExp(r'\d'))) {
+      return "Password must contain at least one digit!";
+    }
+
+    // Check if password contains at least one special character
+    if (!password.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
+      return "Password must contain at least one special character!";
+    }
+
+    // If all conditions pass, the password is valid
+    return null;
+  }
+
   // Function to validate Gender
   static String? validateGender(String? gender) {
     if (gender == null || gender.isEmpty) {

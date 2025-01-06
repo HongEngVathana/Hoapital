@@ -19,11 +19,11 @@
 //     );
 //   }
 // }
-//This routes form homepage
+//This routes form homepageimport 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
-import 'package:hospital/core/constants/app_size.dart';
-
 import 'package:hospital/core/utilities/form_util.dart';
+import 'package:hospital/features/auth/views/userinformationform.dart';
+import 'package:hospital/routes/AppRoutes.dart';
 import 'package:hospital/widgets/custom_button.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -34,100 +34,98 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController _firstNameController = TextEditingController();
-  final TextEditingController _lastNameController = TextEditingController();
-  final TextEditingController _genderController = TextEditingController();
-  final TextEditingController _dobController = TextEditingController();
+  final TextEditingController _userName = TextEditingController();
+  final TextEditingController _passWords = TextEditingController();
 
-  String? _firstNameError;
-  String? _lastNameError;
-  String? _genderError;
-  String? _dobError;
+  String? _userNameError;
+  String? _passWordError;
 
-  void _validateInputs() {
+  @override
+  void dispose() {
+    _userName.dispose();
+    _passWords.dispose();
+    super.dispose();
+  }
+
+  void _validateLogin() {
     setState(() {
-      _firstNameError = FormUtil.validateFirstName(_firstNameController.text);
-      _lastNameError = FormUtil.validateLastName(_lastNameController.text);
-      _genderError = FormUtil.validateGender(_genderController.text);
-      _dobError = FormUtil.validateDateOfBirth(
-        DateTime.tryParse(_dobController.text),
-      );
+      _userNameError = FormUtil.validateUserName(_userName.text);
+      _passWordError = FormUtil.validatePassword(_passWords.text);
     });
+
+    if (_userNameError == null && _passWordError == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Login successful!")),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Please fix the errors and try again.")),
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("UserInformation")),
+      appBar: AppBar(title: const Text("Login")),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _buildTextField(
-              controller: _firstNameController,
-              label: "First Name",
-              errorText: _firstNameError,
+            _buildLoginTextField(
+              controller: _userName,
+              label: "Input Your Username",
+              errorText: _userNameError,
             ),
-            SizedBox(height: Appsizes.paddingLarge(context)),
-            _buildTextField(
-              controller: _lastNameController,
-              label: "Last Name",
-              errorText: _lastNameError,
+            const SizedBox(height: 16),
+            _buildLoginTextField(
+              controller: _passWords,
+              label: "Input Your Password",
+              errorText: _passWordError,
+              obscureText: true,
             ),
-            SizedBox(height: Appsizes.paddingLarge(context)),
-            _buildTextField(
-              controller: _genderController,
-              label: "Gender (Male/Female/Other)",
-              errorText: _genderError,
-            ),
-            SizedBox(height: Appsizes.paddingLarge(context)),
-            _buildTextField(
-              controller: _dobController,
-              label: "Date of Birth (YYYY-MM-DD)",
-              errorText: _dobError,
-            ),
-            SizedBox(height: Appsizes.paddingLarge(context)),
-            _ButtonLogin(),
+            const SizedBox(height: 16),
+            _buildSubmitButton(),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildTextField({
-    required TextEditingController controller,
-    required String label,
-    String? errorText,
-  }) {
-    return TextField(
-      controller: controller,
-      decoration: InputDecoration(
-        border: const OutlineInputBorder(),
-        labelText: label,
-        errorText: errorText,
-      ),
+  Widget _buildSubmitButton() {
+    return CustomButton(
+      label: "Submit",
+      // onPressed: _validateLogin,
+      onPressed: () {
+        _validateLogin();
+        if (_userNameError == null && _passWordError == null) {
+          // Navigator.pushReplacementNamed(context, Approutes.userinformations);
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => Userinformationform()));
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              content: Text("Pleas fix the error before proceeding")));
+        }
+      },
     );
   }
+}
 
-  Widget _ButtonLogin() {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-      child: CustomButton(
-        label: "Submit",
-        onPressed: () {
-          _validateInputs();
-          if (_firstNameError == null &&
-              _lastNameError == null &&
-              _genderError == null &&
-              _dobError == null) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text("All inputs are valid!"),
-              ),
-            );
-          }
-        },
-      ),
-    );
-  }
+Widget _buildLoginTextField({
+  required TextEditingController controller,
+  required String label,
+  String? errorText,
+  bool obscureText = false,
+}) {
+  return TextField(
+    controller: controller,
+    obscureText: obscureText,
+    decoration: InputDecoration(
+      border: const OutlineInputBorder(),
+      labelText: label,
+      errorText: errorText,
+    ),
+  );
 }

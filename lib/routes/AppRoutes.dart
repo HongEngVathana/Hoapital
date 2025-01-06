@@ -53,7 +53,6 @@ class Approutes {
     switch (settings.name) {
       case litties:
         return MaterialPageRoute(builder: (_) => LottieScreen());
-
       case welcomes:
         return MaterialPageRoute(builder: (_) => WelcomeScreen());
       case logins:

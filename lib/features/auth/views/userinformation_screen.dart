@@ -1,61 +1,111 @@
 import 'package:flutter/material.dart';
-import 'package:hospital/core/constants/app_colors.dart';
-import 'package:hospital/core/constants/app_fonts.dart';
-import 'package:hospital/routes/AppRoutes.dart';
-import 'package:lottie/lottie.dart';
+import 'package:hospital/core/constants/app_size.dart';
+
+import 'package:hospital/core/utilities/form_util.dart';
+import 'package:hospital/widgets/custom_button.dart';
 
 class UserinformationScreen extends StatefulWidget {
   const UserinformationScreen({super.key});
 
   @override
-  State<UserinformationScreen> createState() => _LottieScreenState();
+  State<UserinformationScreen> createState() => _LoginScreenState();
 }
 
-class _LottieScreenState extends State<UserinformationScreen> {
-  @override
-  void initState() {
-    super.initState();
-    _navigateToHome();
-  }
+class _LoginScreenState extends State<UserinformationScreen> {
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _genderController = TextEditingController();
+  final TextEditingController _dobController = TextEditingController();
 
-  void _navigateToHome() async {
-    await Future.delayed(const Duration(seconds: 2));
-    // ignore: use_build_context_synchronously
-    Navigator.pushReplacementNamed(context, Approutes.welcomes);
+  String? _firstNameError;
+  String? _lastNameError;
+  String? _genderError;
+  String? _dobError;
+
+  void _validateInputs() {
+    setState(() {
+      _firstNameError = FormUtil.validateFirstName(_firstNameController.text);
+      _lastNameError = FormUtil.validateLastName(_lastNameController.text);
+      _genderError = FormUtil.validateGender(_genderController.text);
+      _dobError = FormUtil.validateDateOfBirth(
+        DateTime.tryParse(_dobController.text),
+      );
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.primary,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          _Littietitle(),
-          _LittieAnnimation(),
-        ],
-      ),
-    );
-  }
-
-  // ignore: non_constant_identifier_names
-  Widget _Littietitle() {
-    return Center(
-      child: Text(
-        "Simpaz Heath Welcome",
-        style: TextStyle(
-          fontSize: AppFonts.headingOne,
-          fontFamily: AppFonts.primaryFont,
-          color: AppColors.text,
+      appBar: AppBar(title: const Text("UserInformation")),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            _buildTextField(
+              controller: _firstNameController,
+              label: "First Name",
+              errorText: _firstNameError,
+            ),
+            SizedBox(height: Appsizes.paddingLarge(context)),
+            _buildTextField(
+              controller: _lastNameController,
+              label: "Last Name",
+              errorText: _lastNameError,
+            ),
+            SizedBox(height: Appsizes.paddingLarge(context)),
+            _buildTextField(
+              controller: _genderController,
+              label: "Gender (Male/Female/Other)",
+              errorText: _genderError,
+            ),
+            SizedBox(height: Appsizes.paddingLarge(context)),
+            _buildTextField(
+              controller: _dobController,
+              label: "Date of Birth (YYYY-MM-DD)",
+              errorText: _dobError,
+            ),
+            SizedBox(height: Appsizes.paddingLarge(context)),
+            _ButtonLogin(),
+          ],
         ),
       ),
     );
   }
 
-  // ignore: non_constant_identifier_names
-  Widget _LittieAnnimation() {
-    return Center(
-      child: Lottie.asset("lib/assets/jsons/lottie_data.json"),
+  Widget _buildTextField({
+    required TextEditingController controller,
+    required String label,
+    String? errorText,
+  }) {
+    return TextField(
+      controller: controller,
+      decoration: InputDecoration(
+        border: const OutlineInputBorder(),
+        labelText: label,
+        errorText: errorText,
+      ),
+    );
+  }
+
+  Widget _ButtonLogin() {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      child: CustomButton(
+        label: "Submit",
+        onPressed: () {
+          _validateInputs();
+          if (_firstNameError == null &&
+              _lastNameError == null &&
+              _genderError == null &&
+              _dobError == null) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text("All inputs are valid!"),
+              ),
+            );
+          }
+        },
+      ),
     );
   }
 }
