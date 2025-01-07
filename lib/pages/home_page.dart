@@ -49,7 +49,7 @@ class _HomePageState extends State<HomePage> {
         );
       }),
       Navigator(onGenerateRoute: (RouteSettings settings) {
-        return MaterialPageRoute(builder: (_) => const TodolistPage());
+        return MaterialPageRoute(builder: (_) => TodolistPage());
       }),
       Navigator(onGenerateRoute: (RouteSettings settings) {
         return MaterialPageRoute(
