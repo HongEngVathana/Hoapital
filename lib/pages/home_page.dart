@@ -9,7 +9,7 @@
 //       body: Center(child: Text('Welcome to the Home Page!')),
 //     );
 //   }
-// }
+// }import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:hospital/core/constants/app_colors.dart';
 import 'package:hospital/features/auth/views/home_screen.dart';
@@ -36,70 +36,47 @@ class _HomePageState extends State<HomePage> {
     _controller = PersistentTabController(initialIndex: 0);
   }
 
-  List<Widget> _buildScreens() {
-    return [
-      Navigator(onGenerateRoute: (RouteSettings settings) {
-        return MaterialPageRoute(
-          builder: (_) => const HomeScreen(),
-        );
-      }),
-      Navigator(onGenerateRoute: (RouteSettings settings) {
-        return MaterialPageRoute(
-          builder: (_) => const SchedulePage(),
-        );
-      }),
-      Navigator(onGenerateRoute: (RouteSettings settings) {
-        return MaterialPageRoute(builder: (_) => TodolistPage());
-      }),
-      Navigator(onGenerateRoute: (RouteSettings settings) {
-        return MaterialPageRoute(
-          builder: (_) => const HistoryPage(),
-        );
-      }),
-      Navigator(onGenerateRoute: (RouteSettings settings) {
-        return MaterialPageRoute(
-          builder: (_) => const ProfilePage(),
-        );
-      }),
-    ];
-  }
+  // List of screens for each tab
+  final List<Widget> _screens = [
+    const HomeScreen(),
+    const SchedulePage(),
+    const TodolistPage(),
+    const HistoryPage(),
+    const ProfilePage(),
+  ];
 
-  List<PersistentBottomNavBarItem> _navBarItems() {
-    return [
-      PersistentBottomNavBarItem(
-        icon: const Icon(Remix.home_4_line),
-        title: ("Home"),
-        activeColorPrimary: AppColors.primary,
-        inactiveColorPrimary: AppColors.secondary,
-      ),
-      PersistentBottomNavBarItem(
-        icon: const Icon(Remix.calendar_2_line),
-        title: ("Schedule"),
-        activeColorPrimary: AppColors.primary,
-        inactiveColorPrimary: AppColors.secondary,
-      ),
-      PersistentBottomNavBarItem(
-        icon: const Icon(
-          Remix.todo_line,
-          color: Colors.white,
-        ),
-        title: ("Todo List"),
-        activeColorPrimary: AppColors.primary,
-        // inactiveColorPrimary: Colors.grey,
-      ),
-      PersistentBottomNavBarItem(
-        icon: const Icon(Remix.history_line),
-        title: ("History"),
-        activeColorPrimary: AppColors.primary,
-        inactiveColorPrimary: AppColors.secondary,
-      ),
-      PersistentBottomNavBarItem(
-          icon: const Icon(Remix.account_circle_line),
-          title: ("Profile"),
-          activeColorPrimary: AppColors.primary,
-          inactiveColorPrimary: AppColors.secondary),
-    ];
-  }
+  // List of bottom navigation bar items
+  final List<PersistentBottomNavBarItem> _navBarItems = [
+    PersistentBottomNavBarItem(
+      icon: const Icon(Remix.home_4_line),
+      title: "Home",
+      activeColorPrimary: AppColors.primary,
+      inactiveColorPrimary: AppColors.secondary,
+    ),
+    PersistentBottomNavBarItem(
+      icon: const Icon(Remix.calendar_2_line),
+      title: "Schedule",
+      activeColorPrimary: AppColors.primary,
+      inactiveColorPrimary: AppColors.secondary,
+    ),
+    PersistentBottomNavBarItem(
+      icon: const Icon(Remix.todo_line, color: Colors.white),
+      title: "Todo List",
+      activeColorPrimary: AppColors.primary,
+    ),
+    PersistentBottomNavBarItem(
+      icon: const Icon(Remix.history_line),
+      title: "History",
+      activeColorPrimary: AppColors.primary,
+      inactiveColorPrimary: AppColors.secondary,
+    ),
+    PersistentBottomNavBarItem(
+      icon: const Icon(Remix.account_circle_line),
+      title: "Profile",
+      activeColorPrimary: AppColors.primary,
+      inactiveColorPrimary: AppColors.secondary,
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -107,8 +84,8 @@ class _HomePageState extends State<HomePage> {
       body: PersistentTabView(
         context,
         controller: _controller,
-        screens: _buildScreens(),
-        items: _navBarItems(),
+        screens: _screens,
+        items: _navBarItems,
         backgroundColor: AppColors.background,
         handleAndroidBackButtonPress: true,
         resizeToAvoidBottomInset: true,
@@ -118,8 +95,7 @@ class _HomePageState extends State<HomePage> {
           colorBehindNavBar: AppColors.background,
           boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 10)],
         ),
-        navBarStyle: NavBarStyle
-            .style15, // Choose desired style we can chang in style (it have in Pub.Dav with this library //:persistent_bottom_nav_bar)
+        navBarStyle: NavBarStyle.style15, // Style of the NavBar
       ),
     );
   }

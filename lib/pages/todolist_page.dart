@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hospital/features/auth/views/editProfile_screen.dart';
 import 'package:hospital/features/auth/views/insurance_screen.dart';
+import 'package:hospital/features/auth/views/paymentbill_screen.dart';
+import 'package:hospital/features/auth/views/prescription_screen.dart';
 import 'package:remixicon/remixicon.dart';
 
 class TodolistPage extends StatefulWidget {
@@ -111,14 +113,24 @@ class _TodolistPageState extends State<TodolistPage> {
                   subtitle: "4 records found",
                   icon: Remix.refund_2_line,
                   iconColor: Colors.teal,
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => PaymentbillScreen()));
+                  },
                 ),
                 ToDoItem(
                   title: "Prescription",
                   subtitle: "4 records found",
                   icon: Remix.dossier_line,
                   iconColor: Colors.teal,
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => PrescriptionScreen()));
+                  },
                 ),
                 ToDoItem(
                   title: "Receipt",
