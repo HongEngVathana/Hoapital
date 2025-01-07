@@ -21,7 +21,7 @@ class _LottieScreenState extends State<LottieScreen> {
   void _navigateToHome() async {
     await Future.delayed(const Duration(seconds: 2));
     // ignore: use_build_context_synchronously
-    Navigator.pushReplacementNamed(context, Approutes.logins);
+    Navigator.pushReplacementNamed(context, Approutes.welcomes);
   }
 
   @override

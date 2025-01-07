@@ -67,9 +67,12 @@ flutter:
     - lib/assets/jsons/lottie_data.json
     - lib/assets/jsons/welcome_data.json
     - lib/assets/jsons/imagesilder_dara.json
+    - lib/assets/jsons/eiditProfile_data.json
     - lib/assets/jsons/userprofile_data.json
     - lib/assets/jsons/userInfomaiondata.json
     - lib/assets/images/
+
+    
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

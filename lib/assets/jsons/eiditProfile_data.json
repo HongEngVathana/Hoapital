@@ -1,0 +1,19 @@
+{
+  "personalInfo": {
+    "fullNameEnglish": "John Doe",
+    "fullNameKhmer": "ជន ដូ",
+    "email": "john.doe@example.com",
+    "phoneNumber": "0123456789"
+  },
+  "identification": {
+    "id": "123456789",
+    "dob": "1990-01-01",
+    "address": "123 Main Street, City",
+    "gender": "Male"
+  },
+  "measurements": {
+    "height": "170",
+    "weight": "70",
+    "bmi": "24.2"
+  }
+}

@@ -5,10 +5,13 @@ import 'package:hospital/pages/todolist_page.dart';
 // Screen 1: Personal Information
 class PersonalInfoScreen extends StatelessWidget {
   final TextEditingController fullNameEnglishController =
-      TextEditingController();
-  final TextEditingController fullNameKhmerController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController phoneNumberController = TextEditingController();
+      TextEditingController(text: "John Doe");
+  final TextEditingController fullNameKhmerController =
+      TextEditingController(text: "ជន ដូ");
+  final TextEditingController emailController =
+      TextEditingController(text: "john.doe@example.com");
+  final TextEditingController phoneNumberController =
+      TextEditingController(text: "0123456789");
 
   PersonalInfoScreen({super.key});
 
@@ -132,9 +135,13 @@ class IdentificationScreen extends StatefulWidget {
 }
 
 class _IdentificationScreenState extends State<IdentificationScreen> {
-  final TextEditingController idController = TextEditingController();
-  final TextEditingController dobController = TextEditingController();
-  final TextEditingController addressController = TextEditingController();
+  final TextEditingController idController =
+      TextEditingController(text: "123456789");
+  final TextEditingController dobController =
+      TextEditingController(text: "1990-01-01");
+  final TextEditingController addressController =
+      TextEditingController(text: "123 Main Street, City");
+
   String? selectedGender; // Track the selected gender
 
   @override
@@ -272,9 +279,12 @@ class MeasurementsScreen extends StatefulWidget {
 }
 
 class _MeasurementsScreenState extends State<MeasurementsScreen> {
-  final TextEditingController heightController = TextEditingController();
-  final TextEditingController weightController = TextEditingController();
-  final TextEditingController bmiController = TextEditingController();
+  final TextEditingController heightController =
+      TextEditingController(text: "170");
+  final TextEditingController weightController =
+      TextEditingController(text: "70");
+  final TextEditingController bmiController =
+      TextEditingController(text: "24.2");
 
   @override
   void initState() {
@@ -366,9 +376,11 @@ class _MeasurementsScreenState extends State<MeasurementsScreen> {
                   child: ElevatedButton(
                     onPressed: () {
                       Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => TodolistPage()));
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const TodolistPage(),
+                        ),
+                      );
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.teal,
@@ -378,7 +390,7 @@ class _MeasurementsScreenState extends State<MeasurementsScreen> {
                       padding: const EdgeInsets.symmetric(vertical: 16.0),
                     ),
                     child: const Text(
-                      "Submit",
+                      "Next",
                       style: TextStyle(color: Colors.white, fontSize: 16),
                     ),
                   ),
@@ -393,10 +405,11 @@ class _MeasurementsScreenState extends State<MeasurementsScreen> {
   }
 
   Widget _buildTextField(String label, TextEditingController controller,
-      {bool isReadOnly = false}) {
+      {bool isReadOnly = false, bool isDate = false}) {
     return TextField(
       controller: controller,
       readOnly: isReadOnly,
+      keyboardType: isDate ? TextInputType.datetime : TextInputType.text,
       decoration: InputDecoration(
         labelText: label,
         border: OutlineInputBorder(
