@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:hospital/features/auth/views/home_screen.dart';
 import 'package:hospital/pages/todolist_page.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -499,7 +500,7 @@ class _SubscriberInfoState extends State<SubscriberInfo> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const TodolistPage()));
+                              builder: (context) => const HomeScreen()));
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.teal,

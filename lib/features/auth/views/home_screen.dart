@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:hospital/features/auth/views/appointment_screen.dart';
 import 'package:hospital/features/auth/views/editProfile_screen.dart';
+import 'package:hospital/features/auth/views/insurance_screen.dart';
 import 'package:hospital/pages/todolist_page.dart';
 import 'package:hospital/widgets/home_app_bar.dart';
 import 'package:hospital/widgets/image_slider.dart';
@@ -139,13 +141,27 @@ class _HomeScreenState extends State<HomeScreen> {
                     mainAxisSpacing: 5, // Reduced spacing between rows
                     crossAxisSpacing: 5, // Reduced spacing between columns
                     children: [
-                      _buildIconWithLabel(Remix.user_fill, "Account", () {}),
+                      _buildIconWithLabel(Remix.user_fill, "Account", () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => PersonalInfoScreen()));
+                      }),
                       _buildIconWithLabel(
                           Remix.stethoscope_fill, "Diagnostics", () {}),
+                      _buildIconWithLabel(Remix.id_card_line, "Insurance", () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => InsuranceScreen()));
+                      }),
                       _buildIconWithLabel(
-                          Remix.id_card_line, "Insurance", () {}),
-                      _buildIconWithLabel(
-                          Remix.calendar_check_line, "Appointment", () {}),
+                          Remix.calendar_check_line, "Appointment", () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => AppointmentsScreen()));
+                      }),
                       _buildIconWithLabel(
                           Icons.receipt_long_outlined, "History", () {}),
                       _buildIconWithLabel(
@@ -180,15 +196,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 _category(),
                 const SizedBox(height: 20),
                 if (selectedIndex == 0)
-                  const Row(
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
+                      const Text(
                         "News",
                         style: TextStyle(
                             fontSize: 22, fontWeight: FontWeight.w800),
                       ),
-                      Icon(
+                      const Icon(
                         Icons.sort,
                         size: 25,
                         color: Colors.teal,
@@ -314,6 +330,89 @@ class _HomeScreenState extends State<HomeScreen> {
             textAlign: TextAlign.center,
             style: const TextStyle(
                 fontSize: 11, fontWeight: FontWeight.w900, color: Colors.white),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class AppointmentCard extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.all(16),
+      padding: EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.teal,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      width: double.infinity,
+      height: 120,
+      child: Row(
+        children: [
+          // Date Section
+          Container(
+            padding: EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+            decoration: BoxDecoration(
+              color: Colors.lightBlue,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "12",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  "Tue",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(width: 16),
+          // Appointment Details Section
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "09:30 AM",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                SizedBox(height: 8),
+                Text(
+                  "Dr. Mim Ankhtor",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 4),
+                Text(
+                  "Depression",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),

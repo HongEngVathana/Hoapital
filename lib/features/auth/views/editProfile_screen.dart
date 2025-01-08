@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hospital/features/auth/views/home_screen.dart';
 import 'package:hospital/pages/profile_page.dart';
 import 'package:hospital/pages/todolist_page.dart';
 
@@ -378,7 +379,7 @@ class _MeasurementsScreenState extends State<MeasurementsScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const TodolistPage(),
+                          builder: (context) => const HomeScreen(),
                         ),
                       );
                     },
@@ -390,7 +391,7 @@ class _MeasurementsScreenState extends State<MeasurementsScreen> {
                       padding: const EdgeInsets.symmetric(vertical: 16.0),
                     ),
                     child: const Text(
-                      "Next",
+                      "Submit",
                       style: TextStyle(color: Colors.white, fontSize: 16),
                     ),
                   ),
