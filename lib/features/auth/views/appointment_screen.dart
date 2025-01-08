@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show rootBundle;
 
 class AppointmentsScreen extends StatefulWidget {
   @override
@@ -6,8 +8,25 @@ class AppointmentsScreen extends StatefulWidget {
 }
 
 class _AppointmentsScreenState extends State<AppointmentsScreen> {
-  // To manage the selected tab: "Current" or "History"
   bool isCurrentTab = true;
+  List<dynamic> currentAppointments = [];
+  List<dynamic> historyAppointments = [];
+
+  @override
+  void initState() {
+    super.initState();
+    loadAppointments();
+  }
+
+  Future<void> loadAppointments() async {
+    final String response =
+        await rootBundle.loadString('lib/assets/jsons/appointment.json');
+    final data = jsonDecode(response);
+    setState(() {
+      currentAppointments = data['currentAppointments'];
+      historyAppointments = data['historyAppointments'];
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,27 +74,11 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
           // Appointment List Section
           Expanded(
             child: ListView(
-              children: isCurrentTab
-                  ? currentAppointments.map((appointment) {
-                      return AppointmentCard(
-                        date: appointment['date']!,
-                        practice: appointment['practice']!,
-                        doctor: appointment['doctor']!,
-                        type: appointment['type']!,
-                        time: appointment['time']!,
-                        patient: appointment['patient']!,
-                      );
-                    }).toList()
-                  : historyAppointments.map((appointment) {
-                      return AppointmentCard(
-                        date: appointment['date']!,
-                        practice: appointment['practice']!,
-                        doctor: appointment['doctor']!,
-                        type: appointment['type']!,
-                        time: appointment['time']!,
-                        patient: appointment['patient']!,
-                      );
-                    }).toList(),
+              children:
+                  (isCurrentTab ? currentAppointments : historyAppointments)
+                      .map((appointment) =>
+                          AppointmentCard(appointment: appointment))
+                      .toList(),
             ),
           ),
         ],
@@ -113,21 +116,9 @@ class TabButton extends StatelessWidget {
 
 // Appointment Card Widget
 class AppointmentCard extends StatelessWidget {
-  final String date;
-  final String practice;
-  final String doctor;
-  final String type;
-  final String time;
-  final String patient;
+  final Map<String, dynamic> appointment;
 
-  AppointmentCard({
-    required this.date,
-    required this.practice,
-    required this.doctor,
-    required this.type,
-    required this.time,
-    required this.patient,
-  });
+  AppointmentCard({required this.appointment});
 
   @override
   Widget build(BuildContext context) {
@@ -135,56 +126,54 @@ class AppointmentCard extends StatelessWidget {
       margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       child: Padding(
         padding: EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Row(
           children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  padding: EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: Colors.teal,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Text(
-                    date,
+            // Date Section
+            Container(
+              padding: EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: Colors.teal,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Column(
+                children: [
+                  Text(
+                    appointment['date'],
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
+                      fontSize: 24,
                     ),
                   ),
-                ),
-                SizedBox(width: 16),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        practice,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      SizedBox(height: 4),
-                      Text("• $doctor"),
-                      Text("• $type"),
-                    ],
+                  Text(
+                    appointment['day'],
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-            SizedBox(height: 16),
-            Row(
-              children: [
-                Icon(Icons.access_time, color: Colors.grey),
-                SizedBox(width: 8),
-                Text(time),
-                Spacer(),
-                Icon(Icons.person, color: Colors.grey),
-                SizedBox(width: 8),
-                Text(" $patient"),
-              ],
+            SizedBox(width: 16),
+            // Appointment Details Section
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    appointment['time'],
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
+                  SizedBox(height: 8),
+                  Text(appointment['doctor']),
+                  SizedBox(height: 4),
+                  Text(appointment['appointmentType']),
+                ],
+              ),
             ),
           ],
         ),
@@ -192,51 +181,3 @@ class AppointmentCard extends StatelessWidget {
     );
   }
 }
-
-// Mock Data for Current Appointments
-final List<Map<String, String>> currentAppointments = [
-  {
-    "date": "5 Wed May",
-    "practice": "General Checkup",
-    "doctor": "Dr Joseph Pang",
-    "type": "Standard consult",
-    "time": "08.30am",
-    "patient": "Chetra Pang",
-  },
-  {
-    "date": "13 Thu Oct",
-    "practice": "General Checkup",
-    "doctor": "Dr Jennifer Nguyen",
-    "type": "Standard consult",
-    "time": "11.30am",
-    "patient": "Chetra Pang",
-  },
-  {
-    "date": "2 Mon Dec",
-    "practice": "General Family Practice",
-    "doctor": "Dr Strange",
-    "type": "Childhood Immunisation",
-    "time": "11.45am",
-    "patient": "Chetra Pang",
-  },
-];
-
-// Mock Data for History Appointments
-final List<Map<String, String>> historyAppointments = [
-  {
-    "date": "15 Tue Nov",
-    "practice": "City Health Clinic",
-    "doctor": "Dr Alice Smith",
-    "type": "General Checkup",
-    "time": "10.00am",
-    "patient": "Jamie Williams",
-  },
-  {
-    "date": "12 Sat Nov",
-    "practice": "General Family Practice",
-    "doctor": "Dr John Doe",
-    "type": "Dental Cleaning",
-    "time": "2.30pm",
-    "patient": "Chetra Pang",
-  },
-];

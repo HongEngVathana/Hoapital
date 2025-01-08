@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hospital/features/auth/models/appointment_model.dart';
+import 'package:hospital/features/auth/views/Diagnostics_screen.dart';
 import 'package:hospital/features/auth/views/appointment_screen.dart';
 import 'package:hospital/features/auth/views/editProfile_screen.dart';
 import 'package:hospital/features/auth/views/insurance_screen.dart';
@@ -160,8 +161,14 @@ class _HomeScreenState extends State<HomeScreen> {
                             MaterialPageRoute(
                                 builder: (context) => PersonalInfoScreen()));
                       }),
-                      _buildIconWithLabel(
-                          Remix.stethoscope_fill, "Diagnostics", () {}),
+                      _buildIconWithLabel(Remix.stethoscope_fill, "Diagnostics",
+                          () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    DiagnosticsServicesScreen()));
+                      }),
                       _buildIconWithLabel(Remix.id_card_line, "Insurance", () {
                         Navigator.push(
                             context,
@@ -215,7 +222,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Text(
                       "Upcoming Appointments",
                       style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
+                          TextStyle(fontSize: 22, fontWeight: FontWeight.w800),
                     ),
                     Icon(
                       Icons.sort,
@@ -237,13 +244,17 @@ class _HomeScreenState extends State<HomeScreen> {
 
                     if (!snapshot.hasData || snapshot.data!.isEmpty) {
                       return const Center(
-                          child: Text('No appointments available.'));
+                        child: Text('No appointments available.'),
+                      );
                     }
 
-                    List<Appointment> appointmentsList = snapshot.data!;
+                    // Sort appointments by date in ascending order
+                    List<Appointment> sortedAppointments = snapshot.data!;
+                    sortedAppointments.sort((a, b) => DateTime.parse(a.date)
+                        .compareTo(DateTime.parse(b.date)));
 
                     return Column(
-                      children: appointmentsList
+                      children: sortedAppointments
                           .map((appointment) =>
                               AppointmentCard(appointment: appointment))
                           .toList(),
@@ -257,6 +268,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+  // Error: type _Map<String, dynamic> is not a subtype of type  'list<dynamic>
 
   Widget _category() {
     return Column(
@@ -338,6 +350,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Text(
               subtitle,
               style: TextStyle(
+                // ignore: deprecated_member_use
                 color: Colors.white.withOpacity(0.9),
                 fontSize: 14,
               ),
@@ -379,7 +392,7 @@ class _HomeScreenState extends State<HomeScreen> {
 class AppointmentCard extends StatelessWidget {
   final Appointment appointment;
 
-  const AppointmentCard({required this.appointment});
+  const AppointmentCard({super.key, required this.appointment});
 
   @override
   Widget build(BuildContext context) {

@@ -1,10 +1,43 @@
-[
-  {
-    "date": "5",
-    "day": "Wed",
-    "time": "08:30 AM",
-    "doctor": "Dr. Joseph Pang",
-    "appointmentType": "General Checkup"
-  }
+{
+  "currentAppointments": [
+    {
+      "date": "5",
+      "day": "Wed",
+      "time": "08:30 AM",
+      "doctor": "Dr. Joseph Pang",
+      "appointmentType": "General Checkup"
+    },
+    {
+      "date": "13",
+      "day": "Thu",
+      "time": "11:30 AM",
+      "doctor": "Dr. Jennifer Nguyen",
+      "appointmentType": "Standard Consult"
+    },
+    {
+      "date": "2",
+      "day": "Mon",
+      "time": "11:45 AM",
+      "doctor": "Dr. Strange",
+      "appointmentType": "Childhood Immunisation"
+    }
+  ],
+  "historyAppointments": [
+    {
+      "date": "15",
+      "day": "Tue",
+      "time": "10:00 AM",
+      "doctor": "Dr. Alice Smith",
+      "appointmentType": "General Checkup"
+    },
+    {
+      "date": "12",
+      "day": "Sat",
+      "time": "02:30 PM",
+      "doctor": "Dr. John Doe",
+      "appointmentType": "Dental Cleaning"
+    }
+  ]
+}
 
-]
+
