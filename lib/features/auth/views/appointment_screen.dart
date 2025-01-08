@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-
-
 class AppointmentsScreen extends StatefulWidget {
   @override
   _AppointmentsScreenState createState() => _AppointmentsScreenState();
@@ -198,7 +196,7 @@ class AppointmentCard extends StatelessWidget {
 // Mock Data for Current Appointments
 final List<Map<String, String>> currentAppointments = [
   {
-    "date": "21 Wed Nov",
+    "date": "5 Wed May",
     "practice": "General Checkup",
     "doctor": "Dr Joseph Pang",
     "type": "Standard consult",

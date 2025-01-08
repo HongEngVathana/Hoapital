@@ -70,6 +70,7 @@ flutter:
     - lib/assets/jsons/eiditProfile_data.json
     - lib/assets/jsons/userprofile_data.json
     - lib/assets/jsons/userInfomaiondata.json
+    - lib/assets/jsons/appointment.json
     - lib/assets/images/
 
     

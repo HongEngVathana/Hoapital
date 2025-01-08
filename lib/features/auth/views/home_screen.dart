@@ -1,8 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:hospital/features/auth/models/appointment_model.dart';
 import 'package:hospital/features/auth/views/appointment_screen.dart';
 import 'package:hospital/features/auth/views/editProfile_screen.dart';
 import 'package:hospital/features/auth/views/insurance_screen.dart';
 import 'package:hospital/pages/todolist_page.dart';
+import 'package:hospital/services/appointment_service.dart';
 import 'package:hospital/widgets/home_app_bar.dart';
 import 'package:hospital/widgets/image_slider.dart';
 import 'package:hospital/widgets/search_bar.dart';
@@ -18,6 +23,14 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int currentSlider = 0;
   int selectedIndex = 0;
+
+  late Future<List<Appointment>> appointments;
+
+  @override
+  void initState() {
+    super.initState();
+    appointments = AppointmentService().fetchAppointments();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -195,22 +208,48 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 _category(),
                 const SizedBox(height: 20),
-                if (selectedIndex == 0)
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        "News",
-                        style: TextStyle(
-                            fontSize: 22, fontWeight: FontWeight.w800),
-                      ),
-                      const Icon(
-                        Icons.sort,
-                        size: 25,
-                        color: Colors.teal,
-                      ),
-                    ],
-                  ),
+                if (selectedIndex == 0) const SizedBox(height: 15),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const [
+                    Text(
+                      "Upcoming Appointments",
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
+                    ),
+                    Icon(
+                      Icons.sort,
+                      size: 25,
+                      color: Colors.teal,
+                    ),
+                  ],
+                ),
+                FutureBuilder<List<Appointment>>(
+                  future: appointments,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+
+                    if (snapshot.hasError) {
+                      return Center(child: Text('Error: ${snapshot.error}'));
+                    }
+
+                    if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                      return const Center(
+                          child: Text('No appointments available.'));
+                    }
+
+                    List<Appointment> appointmentsList = snapshot.data!;
+
+                    return Column(
+                      children: appointmentsList
+                          .map((appointment) =>
+                              AppointmentCard(appointment: appointment))
+                          .toList(),
+                    );
+                  },
+                ),
               ],
             ),
           ),
@@ -338,11 +377,15 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class AppointmentCard extends StatelessWidget {
+  final Appointment appointment;
+
+  const AppointmentCard({required this.appointment});
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(16),
-      padding: EdgeInsets.all(16),
+      margin: const EdgeInsets.all(5),
+      padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         color: Colors.teal,
         borderRadius: BorderRadius.circular(20),
@@ -353,7 +396,7 @@ class AppointmentCard extends StatelessWidget {
         children: [
           // Date Section
           Container(
-            padding: EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
             decoration: BoxDecoration(
               color: Colors.lightBlue,
               borderRadius: BorderRadius.circular(12),
@@ -362,16 +405,16 @@ class AppointmentCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "12",
-                  style: TextStyle(
+                  appointment.date,
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
-                  "Tue",
-                  style: TextStyle(
+                  appointment.day,
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 16,
                   ),
@@ -379,7 +422,7 @@ class AppointmentCard extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(width: 16),
+          const SizedBox(width: 16),
           // Appointment Details Section
           Expanded(
             child: Column(
@@ -387,26 +430,26 @@ class AppointmentCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "09:30 AM",
-                  style: TextStyle(
+                  appointment.time,
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 Text(
-                  "Dr. Mim Ankhtor",
-                  style: TextStyle(
+                  appointment.doctor,
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 4),
+                const SizedBox(height: 4),
                 Text(
-                  "Depression",
-                  style: TextStyle(
+                  appointment.appointmentType,
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 14,
                   ),
