@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hospital/core/constants/app_colors.dart';
 import 'package:hospital/features/auth/views/editProfile_screen.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -41,7 +42,7 @@ class _ProfilePageState extends State<ProfilePage> {
           Container(
             height: 300,
             decoration: const BoxDecoration(
-              color: Colors.teal,
+              color: AppColors.primary,
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(50),
                 bottomRight: Radius.circular(50),
@@ -133,7 +134,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   trailing: const Text(
                     "ON",
                     style: TextStyle(
-                        color: Colors.teal, fontWeight: FontWeight.bold),
+                        color: AppColors.primary, fontWeight: FontWeight.bold),
                   ),
                 ),
                 _buildOptionTile(
@@ -190,7 +191,7 @@ class _ProfilePageState extends State<ProfilePage> {
       Widget? trailing,
       VoidCallback? onTap}) {
     return ListTile(
-      leading: Icon(icon, color: Colors.teal),
+      leading: Icon(icon, color: AppColors.primary),
       title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
       trailing: trailing,
       onTap: onTap,

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hospital/core/constants/app_colors.dart';
 import 'package:hospital/features/auth/models/appointment_model.dart';
 import 'package:hospital/features/auth/views/Diagnostics_screen.dart';
 import 'package:hospital/features/auth/views/appointment_screen.dart';
@@ -36,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.text,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -65,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 200,
                   margin: const EdgeInsets.symmetric(horizontal: 10),
                   decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 77, 26, 138),
+                    color: AppColors.violet,
                     borderRadius: BorderRadius.circular(15),
                   ),
                   child: Padding(
@@ -80,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             const Text(
                               "Your today's tasks\nalmost done!",
                               style: TextStyle(
-                                color: Colors.white,
+                                color: AppColors.text,
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -94,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         builder: (_) => TodolistPage()));
                               },
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.white,
+                                backgroundColor: AppColors.text,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10),
                                 ),
@@ -102,7 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: const Text(
                                 "View Task",
                                 style: TextStyle(
-                                  color: Color.fromARGB(255, 77, 26, 138),
+                                  color: AppColors.violet,
                                   fontWeight: FontWeight.w800,
                                 ),
                               ),
@@ -119,7 +120,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: CircularProgressIndicator(
                                 value: 0.85,
                                 strokeWidth: 10,
-                                color: Colors.white,
+                                color: AppColors.text,
                                 backgroundColor:
                                     Color.fromARGB(255, 203, 33, 233),
                               ),
@@ -127,7 +128,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             Text(
                               "85%",
                               style: TextStyle(
-                                color: Colors.white,
+                                color: AppColors.text,
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -145,7 +146,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
                   padding: const EdgeInsets.all(12), // Reduced padding
                   decoration: BoxDecoration(
-                    color: Colors.teal[300],
+                    color: AppColors.primary,
                     borderRadius: BorderRadius.circular(15),
                   ),
                   child: GridView.count(
@@ -209,7 +210,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         style: TextStyle(
                             fontWeight: FontWeight.w500,
                             fontSize: 14,
-                            color: Colors.teal),
+                            color: AppColors.primary),
                       ),
                     ],
                   ),
@@ -227,7 +228,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Icon(
                       Icons.sort,
                       size: 25,
-                      color: Colors.teal,
+                      color: AppColors.primary,
                     ),
                   ],
                 ),
@@ -341,7 +342,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Text(
               title,
               style: const TextStyle(
-                color: Colors.white,
+                color: AppColors.text,
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
               ),
@@ -351,7 +352,7 @@ class _HomeScreenState extends State<HomeScreen> {
               subtitle,
               style: TextStyle(
                 // ignore: deprecated_member_use
-                color: Colors.white.withOpacity(0.9),
+                color: AppColors.text.withOpacity(0.9),
                 fontSize: 14,
               ),
             ),
@@ -369,11 +370,11 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           CircleAvatar(
             radius: 28, // Adjusted icon size
-            backgroundColor: Colors.white,
+            backgroundColor: AppColors.text,
             child: Icon(
               icon,
               size: 34, // Reduced icon size
-              color: Colors.teal,
+              color: AppColors.primary,
             ),
           ),
           const SizedBox(height: 4), // Reduced space between icon and label
@@ -381,7 +382,9 @@ class _HomeScreenState extends State<HomeScreen> {
             label,
             textAlign: TextAlign.center,
             style: const TextStyle(
-                fontSize: 11, fontWeight: FontWeight.w900, color: Colors.white),
+                fontSize: 11,
+                fontWeight: FontWeight.w900,
+                color: AppColors.text),
           ),
         ],
       ),
@@ -400,7 +403,7 @@ class AppointmentCard extends StatelessWidget {
       margin: const EdgeInsets.all(5),
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: Colors.teal,
+        color: AppColors.primary,
         borderRadius: BorderRadius.circular(20),
       ),
       width: double.infinity,
@@ -420,7 +423,7 @@ class AppointmentCard extends StatelessWidget {
                 Text(
                   appointment.date,
                   style: const TextStyle(
-                    color: Colors.white,
+                    color: AppColors.text,
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
                   ),
@@ -428,7 +431,7 @@ class AppointmentCard extends StatelessWidget {
                 Text(
                   appointment.day,
                   style: const TextStyle(
-                    color: Colors.white,
+                    color: AppColors.text,
                     fontSize: 16,
                   ),
                 ),
@@ -445,7 +448,7 @@ class AppointmentCard extends StatelessWidget {
                 Text(
                   appointment.time,
                   style: const TextStyle(
-                    color: Colors.white,
+                    color: AppColors.text,
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
                   ),
@@ -454,7 +457,7 @@ class AppointmentCard extends StatelessWidget {
                 Text(
                   appointment.doctor,
                   style: const TextStyle(
-                    color: Colors.white,
+                    color: AppColors.text,
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
@@ -463,7 +466,7 @@ class AppointmentCard extends StatelessWidget {
                 Text(
                   appointment.appointmentType,
                   style: const TextStyle(
-                    color: Colors.white,
+                    color: AppColors.text,
                     fontSize: 14,
                   ),
                 ),

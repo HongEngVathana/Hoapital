@@ -1,33 +1,50 @@
 import 'package:flutter/material.dart';
+import 'package:hospital/core/constants/app_colors.dart';
+import 'package:hospital/features/auth/models/editProfile_model.dart';
 import 'package:hospital/features/auth/views/home_screen.dart';
-import 'package:hospital/pages/profile_page.dart';
-import 'package:hospital/pages/todolist_page.dart';
+import 'package:hospital/services/editProfile_service.dart';
 
 // Screen 1: Personal Information
-class PersonalInfoScreen extends StatelessWidget {
-  final TextEditingController fullNameEnglishController =
-      TextEditingController(text: "John Doe");
-  final TextEditingController fullNameKhmerController =
-      TextEditingController(text: "ជន ដូ");
-  final TextEditingController emailController =
-      TextEditingController(text: "john.doe@example.com");
-  final TextEditingController phoneNumberController =
-      TextEditingController(text: "0123456789");
+class PersonalInfoScreen extends StatefulWidget {
+  @override
+  State<PersonalInfoScreen> createState() => _PersonalInfoScreenState();
+}
 
-  PersonalInfoScreen({super.key});
+class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
+  final PersonalInfoService _service = PersonalInfoService();
+  PersonalInfo? _personalInfo;
+  @override
+  void initState() {
+    super.initState();
+    _loadData();
+  }
+
+  Future<void> _loadData() async {
+    final info = await _service.loadPersonalInfo();
+    setState(() {
+      _personalInfo = info;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    if (_personalInfo == null) {
+      return const Scaffold(
+        body: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           "Edit Profile",
-          style: TextStyle(color: Colors.teal),
+          style: TextStyle(color: AppColors.primary),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.text,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.teal),
+          icon: const Icon(Icons.arrow_back, color: AppColors.primary),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -41,29 +58,25 @@ class PersonalInfoScreen extends StatelessWidget {
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
-                color: Colors.teal,
+                color: AppColors.primary,
               ),
             ),
             const SizedBox(height: 16),
-            _buildTextField("Full name in English", fullNameEnglishController),
+            _buildTextField(
+                "Full name in English", _personalInfo!.fullNameEnglish),
             const SizedBox(height: 16),
-            _buildTextField("Full name in Khmer", fullNameKhmerController),
+            _buildTextField("Full name in Khmer", _personalInfo!.fullNameKhmer),
             const SizedBox(height: 16),
-            _buildTextField("Email", emailController),
+            _buildTextField("Email", _personalInfo!.email),
             const SizedBox(height: 16),
-            _buildTextField("Phone number", phoneNumberController),
-
-            // Spacer to push the buttons to the bottom
+            _buildTextField("Phone number", _personalInfo!.phoneNumber),
             const Spacer(),
-
-            // Buttons aligned as per the image
             Row(
               children: [
-                // Back Button
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.pop(context); // Navigate back
+                      Navigator.pop(context);
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.grey,
@@ -74,7 +87,7 @@ class PersonalInfoScreen extends StatelessWidget {
                     ),
                     child: const Text(
                       "Back",
-                      style: TextStyle(color: Colors.white, fontSize: 16),
+                      style: TextStyle(color: AppColors.text, fontSize: 16),
                     ),
                   ),
                 ),
@@ -91,7 +104,7 @@ class PersonalInfoScreen extends StatelessWidget {
                       );
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.teal,
+                      backgroundColor: AppColors.primary,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20.0),
                       ),
@@ -99,7 +112,7 @@ class PersonalInfoScreen extends StatelessWidget {
                     ),
                     child: const Text(
                       "Next",
-                      style: TextStyle(color: Colors.white, fontSize: 16),
+                      style: TextStyle(color: AppColors.text, fontSize: 16),
                     ),
                   ),
                 ),
@@ -114,9 +127,9 @@ class PersonalInfoScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildTextField(String label, TextEditingController controller) {
+  Widget _buildTextField(String label, String value) {
     return TextField(
-      controller: controller,
+      controller: TextEditingController(text: value),
       decoration: InputDecoration(
         labelText: label,
         border: OutlineInputBorder(
@@ -136,27 +149,43 @@ class IdentificationScreen extends StatefulWidget {
 }
 
 class _IdentificationScreenState extends State<IdentificationScreen> {
-  final TextEditingController idController =
-      TextEditingController(text: "123456789");
-  final TextEditingController dobController =
-      TextEditingController(text: "1990-01-01");
-  final TextEditingController addressController =
-      TextEditingController(text: "123 Main Street, City");
-
   String? selectedGender; // Track the selected gender
+
+  final PersonalInfoService _service = PersonalInfoService();
+  PersonalInfo? _personalInfo;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadData();
+  }
+
+  Future<void> _loadData() async {
+    final info = await _service.loadPersonalInfo();
+    setState(() {
+      _personalInfo = info;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    if (_personalInfo == null) {
+      return const Scaffold(
+        body: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
     return Scaffold(
       appBar: AppBar(
         title: const Text(
           "Edit Profile",
-          style: TextStyle(color: Colors.teal),
+          style: TextStyle(color: AppColors.primary),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.text,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.teal),
+          icon: const Icon(Icons.arrow_back, color: AppColors.primary),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -165,11 +194,11 @@ class _IdentificationScreenState extends State<IdentificationScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildTextField("Identification", idController),
+            _buildTextField("Identification", _personalInfo!.id),
             const SizedBox(height: 16),
-            _buildTextField("Driver License", idController),
+            _buildTextField("Driver License", _personalInfo!.driverID),
             const SizedBox(height: 16),
-            _buildTextField("Date of birth", dobController, isDate: true),
+            _buildTextField("Date of birth", _personalInfo!.dob),
             const SizedBox(height: 16),
             Row(
               children: [
@@ -179,7 +208,7 @@ class _IdentificationScreenState extends State<IdentificationScreen> {
               ],
             ),
             const SizedBox(height: 16),
-            _buildTextField("Address", addressController),
+            _buildTextField("Address", _personalInfo!.address),
             const Spacer(),
             Row(
               children: [
@@ -198,7 +227,7 @@ class _IdentificationScreenState extends State<IdentificationScreen> {
                     ),
                     child: const Text(
                       "Back",
-                      style: TextStyle(color: Colors.white, fontSize: 16),
+                      style: TextStyle(color: AppColors.text, fontSize: 16),
                     ),
                   ),
                 ),
@@ -215,7 +244,7 @@ class _IdentificationScreenState extends State<IdentificationScreen> {
                       );
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.teal,
+                      backgroundColor: AppColors.primary,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20.0),
                       ),
@@ -223,7 +252,7 @@ class _IdentificationScreenState extends State<IdentificationScreen> {
                     ),
                     child: const Text(
                       "Next",
-                      style: TextStyle(color: Colors.white, fontSize: 16),
+                      style: TextStyle(color: AppColors.text, fontSize: 16),
                     ),
                   ),
                 ),
@@ -236,11 +265,9 @@ class _IdentificationScreenState extends State<IdentificationScreen> {
     );
   }
 
-  Widget _buildTextField(String label, TextEditingController controller,
-      {bool isDate = false}) {
+  Widget _buildTextField(String label, String value) {
     return TextField(
-      controller: controller,
-      keyboardType: isDate ? TextInputType.datetime : TextInputType.text,
+      controller: TextEditingController(text: value),
       decoration: InputDecoration(
         labelText: label,
         border: OutlineInputBorder(
@@ -258,7 +285,8 @@ class _IdentificationScreenState extends State<IdentificationScreen> {
         });
       },
       style: ElevatedButton.styleFrom(
-        backgroundColor: selectedGender == gender ? Colors.teal : Colors.grey,
+        backgroundColor:
+            selectedGender == gender ? AppColors.primary : Colors.grey,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8.0),
         ),
@@ -266,7 +294,7 @@ class _IdentificationScreenState extends State<IdentificationScreen> {
       child: Text(
         gender,
         style: const TextStyle(
-            color: Colors.white, fontWeight: FontWeight.w900, fontSize: 16),
+            color: AppColors.text, fontWeight: FontWeight.w900, fontSize: 16),
       ),
     );
   }
@@ -280,16 +308,17 @@ class MeasurementsScreen extends StatefulWidget {
 }
 
 class _MeasurementsScreenState extends State<MeasurementsScreen> {
-  final TextEditingController heightController =
-      TextEditingController(text: "170");
-  final TextEditingController weightController =
-      TextEditingController(text: "70");
-  final TextEditingController bmiController =
-      TextEditingController(text: "24.2");
+  final PersonalInfoService _service = PersonalInfoService();
+  PersonalInfo? _personalInfo;
+
+  final TextEditingController heightController = TextEditingController();
+  final TextEditingController weightController = TextEditingController();
+  final TextEditingController bmiController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
+    _loadData();
 
     // Add listeners to update BMI when height or weight changes
     heightController.addListener(_calculateBMI);
@@ -302,6 +331,18 @@ class _MeasurementsScreenState extends State<MeasurementsScreen> {
     weightController.dispose();
     bmiController.dispose();
     super.dispose();
+  }
+
+  Future<void> _loadData() async {
+    final info = await _service.loadPersonalInfo();
+    setState(() {
+      _personalInfo = info;
+      if (_personalInfo != null) {
+        heightController.text = _personalInfo!.height.toString();
+        weightController.text = _personalInfo!.weight.toString();
+        _calculateBMI();
+      }
+    });
   }
 
   void _calculateBMI() {
@@ -326,16 +367,24 @@ class _MeasurementsScreenState extends State<MeasurementsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    if (_personalInfo == null) {
+      return const Scaffold(
+        body: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
           "Edit Profile",
-          style: TextStyle(color: Colors.teal),
+          style: TextStyle(color: AppColors.primary),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.text,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.teal),
+          icon: const Icon(Icons.arrow_back, color: AppColors.primary),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -367,12 +416,12 @@ class _MeasurementsScreenState extends State<MeasurementsScreen> {
                     ),
                     child: const Text(
                       "Back",
-                      style: TextStyle(color: Colors.white, fontSize: 16),
+                      style: TextStyle(color: AppColors.text, fontSize: 16),
                     ),
                   ),
                 ),
                 const SizedBox(width: 16.0), // Space between buttons
-                // Next Button
+                // Submit Button
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {
@@ -392,7 +441,7 @@ class _MeasurementsScreenState extends State<MeasurementsScreen> {
                     ),
                     child: const Text(
                       "Submit",
-                      style: TextStyle(color: Colors.white, fontSize: 16),
+                      style: TextStyle(color: AppColors.text, fontSize: 16),
                     ),
                   ),
                 ),
@@ -406,11 +455,10 @@ class _MeasurementsScreenState extends State<MeasurementsScreen> {
   }
 
   Widget _buildTextField(String label, TextEditingController controller,
-      {bool isReadOnly = false, bool isDate = false}) {
+      {bool isReadOnly = false}) {
     return TextField(
       controller: controller,
       readOnly: isReadOnly,
-      keyboardType: isDate ? TextInputType.datetime : TextInputType.text,
       decoration: InputDecoration(
         labelText: label,
         border: OutlineInputBorder(
