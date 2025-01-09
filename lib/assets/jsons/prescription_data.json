@@ -1,0 +1,222 @@
+[
+  {
+    "hospitalName": "Simpaz",
+    "date": "11/12/2024",
+    "doctor": "Dr. Nary",
+    "medicine": [
+      {
+        "name": "DEMO MEDICINE 1",
+        "type": "TAB",
+        "quantityPerDose": 1,
+        "dosage": {
+          "frequency": ["Morning", "Night"],
+          "instructions": "Before Food"
+        },
+        "duration": "10 Days",
+        "totalQuantity": 20
+      }
+    ],
+    "actions": [
+      { "label": "Delete", "type": "button", "style": "danger" },
+      { "label": "View", "type": "button", "style": "primary" }
+    ]
+  },
+  {
+    "hospitalName": "HealthCare Center",
+    "date": "12/12/2024",
+    "doctor": "Dr. Smith",
+    "medicine": [
+      {
+        "name": "VITAMIN C",
+        "type": "CAP",
+        "quantityPerDose": 1,
+        "dosage": {
+          "frequency": ["Morning"],
+          "instructions": "After Food"
+        },
+        "duration": "5 Days",
+        "totalQuantity": 5
+      }
+    ],
+    "actions": [
+      { "label": "Delete", "type": "button", "style": "danger" },
+      { "label": "View", "type": "button", "style": "primary" }
+    ]
+  },
+  {
+    "hospitalName": "City Hospital",
+    "date": "13/12/2024",
+    "doctor": "Dr. Alice",
+    "medicine": [
+      {
+        "name": "PAINKILLER",
+        "type": "TAB",
+        "quantityPerDose": 2,
+        "dosage": {
+          "frequency": ["Night"],
+          "instructions": "Before Food"
+        },
+        "duration": "7 Days",
+        "totalQuantity": 14
+      }
+    ],
+    "actions": [
+      { "label": "Delete", "type": "button", "style": "danger" },
+      { "label": "View", "type": "button", "style": "primary" }
+    ]
+  },
+  {
+    "hospitalName": "Simpaz",
+    "date": "14/12/2024",
+    "doctor": "Dr. Nary",
+    "medicine": [
+      {
+        "name": "COLD MEDICINE",
+        "type": "TAB",
+        "quantityPerDose": 1,
+        "dosage": {
+          "frequency": ["Morning", "Evening"],
+          "instructions": "After Food"
+        },
+        "duration": "3 Days",
+        "totalQuantity": 6
+      }
+    ],
+    "actions": [
+      { "label": "Delete", "type": "button", "style": "danger" },
+      { "label": "View", "type": "button", "style": "primary" }
+    ]
+  },
+  {
+    "hospitalName": "HealthPlus",
+    "date": "15/12/2024",
+    "doctor": "Dr. Paul",
+    "medicine": [
+      {
+        "name": "ANTIBIOTIC",
+        "type": "CAP",
+        "quantityPerDose": 1,
+        "dosage": {
+          "frequency": ["Morning", "Afternoon", "Night"],
+          "instructions": "Before Food"
+        },
+        "duration": "5 Days",
+        "totalQuantity": 15
+      }
+    ],
+    "actions": [
+      { "label": "Delete", "type": "button", "style": "danger" },
+      { "label": "View", "type": "button", "style": "primary" }
+    ]
+  },
+  {
+    "hospitalName": "CareClinic",
+    "date": "16/12/2024",
+    "doctor": "Dr. Emma",
+    "medicine": [
+      {
+        "name": "ALLERGY RELIEF",
+        "type": "SYRUP",
+        "quantityPerDose": 10,
+        "dosage": {
+          "frequency": ["Morning", "Night"],
+          "instructions": "After Food"
+        },
+        "duration": "7 Days",
+        "totalQuantity": 140
+      }
+    ],
+    "actions": [
+      { "label": "Delete", "type": "button", "style": "danger" },
+      { "label": "View", "type": "button", "style": "primary" }
+    ]
+  },
+  {
+    "hospitalName": "Medicare",
+    "date": "17/12/2024",
+    "doctor": "Dr. Lily",
+    "medicine": [
+      {
+        "name": "COUGH SYRUP",
+        "type": "SYRUP",
+        "quantityPerDose": 15,
+        "dosage": {
+          "frequency": ["Morning"],
+          "instructions": "Before Food"
+        },
+        "duration": "3 Days",
+        "totalQuantity": 45
+      }
+    ],
+    "actions": [
+      { "label": "Delete", "type": "button", "style": "danger" },
+      { "label": "View", "type": "button", "style": "primary" }
+    ]
+  },
+  {
+    "hospitalName": "Simpaz",
+    "date": "18/12/2024",
+    "doctor": "Dr. Nary",
+    "medicine": [
+      {
+        "name": "FEVER MEDICINE",
+        "type": "TAB",
+        "quantityPerDose": 1,
+        "dosage": {
+          "frequency": ["Morning", "Night"],
+          "instructions": "Before Food"
+        },
+        "duration": "5 Days",
+        "totalQuantity": 10
+      }
+    ],
+    "actions": [
+      { "label": "Delete", "type": "button", "style": "danger" },
+      { "label": "View", "type": "button", "style": "primary" }
+    ]
+  },
+  {
+    "hospitalName": "CityCare",
+    "date": "19/12/2024",
+    "doctor": "Dr. James",
+    "medicine": [
+      {
+        "name": "PAIN RELIEF",
+        "type": "CAP",
+        "quantityPerDose": 1,
+        "dosage": {
+          "frequency": ["Morning", "Evening"],
+          "instructions": "After Food"
+        },
+        "duration": "4 Days",
+        "totalQuantity": 8
+      }
+    ],
+    "actions": [
+      { "label": "Delete", "type": "button", "style": "danger" },
+      { "label": "View", "type": "button", "style": "primary" }
+    ]
+  },
+  {
+    "hospitalName": "HealthFirst",
+    "date": "20/12/2024",
+    "doctor": "Dr. Sarah",
+    "medicine": [
+      {
+        "name": "DETOX MEDICINE",
+        "type": "TAB",
+        "quantityPerDose": 1,
+        "dosage": {
+          "frequency": ["Night"],
+          "instructions": "After Food"
+        },
+        "duration": "3 Days",
+        "totalQuantity": 3
+      }
+    ],
+    "actions": [
+      { "label": "Delete", "type": "button", "style": "danger" },
+      { "label": "View", "type": "button", "style": "primary" }
+    ]
+  }
+]

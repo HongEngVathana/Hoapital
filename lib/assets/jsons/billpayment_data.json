@@ -1,0 +1,142 @@
+[
+  {
+    "hospitalName": "simpaz",
+    "date": "11/12/2024",
+    "staffName": "Vathana",
+    "typeOfDisease": "Headache",
+    "checkFee": 300,
+    "warranty": "No",
+    "drugPrices": 400,
+    "total": 700,
+    "actions": {
+      "view": true,
+      "pay": true
+    }
+  },
+  {
+    "hospitalName": "Khmer",
+    "date": "11/12/2024",
+    "staffName": "Nary",
+    "typeOfDisease": "Headache",
+    "checkFee": 300,
+    "warranty": "No",
+    "drugPrices": 400,
+    "total": 700,
+    "actions": {
+      "view": true,
+      "pay": true
+    }
+  },
+  {
+    "hospitalName": "Angkor",
+    "date": "12/12/2024",
+    "staffName": "Dara",
+    "typeOfDisease": "Fever",
+    "checkFee": 200,
+    "warranty": "Yes",
+    "drugPrices": 350,
+    "total": 550,
+    "actions": {
+      "view": true,
+      "pay": false
+    }
+  },
+  {
+    "hospitalName": "Angkor",
+    "date": "13/12/2024",
+    "staffName": "Sokha",
+    "typeOfDisease": "Cough",
+    "checkFee": 150,
+    "warranty": "No",
+    "drugPrices": 200,
+    "total": 350,
+    "actions": {
+      "view": true,
+      "pay": true
+    }
+  },
+  {
+    "hospitalName": "MedPlus",
+    "date": "14/12/2024",
+    "staffName": "Rina",
+    "typeOfDisease": "Flu",
+    "checkFee": 250,
+    "warranty": "Yes",
+    "drugPrices": 300,
+    "total": 550,
+    "actions": {
+      "view": true,
+      "pay": true
+    }
+  },
+  {
+    "hospitalName": "Sihanouk",
+    "date": "15/12/2024",
+    "staffName": "Vathana",
+    "typeOfDisease": "Back Pain",
+    "checkFee": 400,
+    "warranty": "No",
+    "drugPrices": 450,
+    "total": 850,
+    "actions": {
+      "view": true,
+      "pay": true
+    }
+  },
+  {
+    "hospitalName": "Cambodia ",
+    "date": "16/12/2024",
+    "staffName": "Nary",
+    "typeOfDisease": "Skin Rash",
+    "checkFee": 200,
+    "warranty": "Yes",
+    "drugPrices": 150,
+    "total": 350,
+    "actions": {
+      "view": true,
+      "pay": true
+    }
+  },
+  {
+    "hospitalName": "CityCare",
+    "date": "17/12/2024",
+    "staffName": "Dara",
+    "typeOfDisease": "Allergy",
+    "checkFee": 300,
+    "warranty": "No",
+    "drugPrices": 400,
+    "total": 700,
+    "actions": {
+      "view": true,
+      "pay": true
+    }
+  },
+  {
+    "hospitalName": "Royal Clinic",
+    "date": "18/12/2024",
+    "staffName": "Sokha",
+    "typeOfDisease": "Diabetes",
+    "checkFee": 500,
+    "warranty": "Yes",
+    "drugPrices": 800,
+    "total": 1300,
+    "actions": {
+      "view": true,
+      "pay": true
+    }
+  },
+  {
+    "hospitalName": "PeaceCare",
+    "date": "19/12/2024",
+    "staffName": "Rina",
+    "typeOfDisease": "Migraine",
+    "checkFee": 350,
+    "warranty": "No",
+    "drugPrices": 250,
+    "total": 600,
+    "actions": {
+      "view": true,
+      "pay": true
+    }
+  }
+]

@@ -73,9 +73,9 @@ flutter:
     - lib/assets/jsons/userInfomaiondata.json
     - lib/assets/jsons/appointment.json
     - lib/assets/jsons/upcommingAppointment.json
+    - lib/assets/jsons/billpayment_data.json
+    - lib/assets/jsons/prescription_data.json
     - lib/assets/images/
-
-    
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
