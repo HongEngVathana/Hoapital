@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hospital/core/constants/app_size.dart';
 
 import 'package:hospital/core/utilities/form_util.dart';
 import 'package:hospital/widgets/custom_button.dart';
