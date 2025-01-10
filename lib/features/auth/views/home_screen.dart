@@ -1,7 +1,8 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hospital/core/constants/app_colors.dart';
+import 'package:hospital/core/constants/app_fonts.dart';
+import 'package:hospital/core/constants/app_size.dart';
 import 'package:hospital/features/auth/models/appointment_model.dart';
 import 'package:hospital/features/auth/views/Diagnostics_screen.dart';
 import 'package:hospital/features/auth/views/appointment_screen.dart';
@@ -36,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.background,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -61,15 +62,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 const SizedBox(height: 20),
                 // Task Progress Card
                 Container(
-                  width: double.infinity,
-                  height: 200,
-                  margin: const EdgeInsets.symmetric(horizontal: 10),
+                  height: AppSizes.cardHeight(context), // 10% of screen height
+
                   decoration: BoxDecoration(
                     color: const Color.fromARGB(255, 77, 26, 138),
-                    borderRadius: BorderRadius.circular(15),
+                    borderRadius:
+                        BorderRadius.circular(AppSizes.borderRadius(context)),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.all(16.0),
+                    padding: EdgeInsets.all(AppSizes.paddingMedium(context)),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -77,15 +78,15 @@ class _HomeScreenState extends State<HomeScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Text(
+                            Text(
                               "Your today's tasks\nalmost done!",
                               style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
+                                color: AppColors.text,
+                                fontSize: AppFonts.getHeadingThree(context),
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            const SizedBox(height: 8),
+                            SizedBox(height: AppSizes.headerHeight(context)),
                             ElevatedButton(
                               onPressed: () {
                                 Navigator.push(
@@ -94,17 +95,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                         builder: (_) => TodolistPage()));
                               },
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.white,
+                                backgroundColor: AppColors.background,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                               ),
-                              child: const Text(
+                              child: Text(
                                 "View Task",
                                 style: TextStyle(
-                                  color: Color.fromARGB(255, 77, 26, 138),
-                                  fontWeight: FontWeight.w800,
-                                ),
+                                    color: Color.fromARGB(255, 77, 26, 138),
+                                    fontWeight: FontWeight.w800,
+                                    fontSize: AppFonts.getBodySmall(context)),
                               ),
                             ),
                           ],
@@ -112,14 +113,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         // ignore: prefer_const_constructors
                         Stack(
                           alignment: Alignment.center,
-                          children: const [
+                          children: [
                             SizedBox(
-                              width: 80,
-                              height: 80,
+                              width: AppSizes.Within(context),
+                              height: AppSizes.Heighin(context),
                               child: CircularProgressIndicator(
                                 value: 0.85,
-                                strokeWidth: 10,
-                                color: Colors.white,
+                                strokeWidth: AppSizes.borderRadius(context),
+                                color: AppColors.text,
                                 backgroundColor:
                                     Color.fromARGB(255, 203, 33, 233),
                               ),
@@ -127,8 +128,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             Text(
                               "85%",
                               style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
+                                color: AppColors.text,
+                                fontSize: AppFonts.getBodyText(context),
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -140,13 +141,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 // Icon Grid Section
                 Container(
-                  width: double.infinity,
-                  margin:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-                  padding: const EdgeInsets.all(12), // Reduced padding
+                  height: AppSizes.cardHeight(context),
+                  margin: EdgeInsets.symmetric(
+                      vertical: AppSizes.paddingSmall(context)),
                   decoration: BoxDecoration(
-                    color: Colors.teal[300],
-                    borderRadius: BorderRadius.circular(15),
+                    color: AppColors.primary,
+                    borderRadius:
+                        BorderRadius.circular(AppSizes.borderRadius(context)),
                   ),
                   child: GridView.count(
                     crossAxisCount: 4,
@@ -185,7 +186,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       _buildIconWithLabel(
                           Icons.receipt_long_outlined, "History", () {}),
                       _buildIconWithLabel(
-                          Icons.payments_outlined, "Bill Payments", () {}),
+                          Icons.payments_outlined, "Bil lPayments", () {}),
                       _buildIconWithLabel(
                           Remix.dossier_line, "Prescriptions", () {}),
                       _buildIconWithLabel(
@@ -193,23 +194,24 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                 ),
-                const SizedBox(height: 15),
+
                 // Categories Section
                 if (selectedIndex == 0)
-                  const Row(
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         "Category",
                         style: TextStyle(
-                            fontSize: 22, fontWeight: FontWeight.w900),
+                            fontSize: AppFonts.getHeadingTwo(context),
+                            fontWeight: FontWeight.w900),
                       ),
                       Text(
                         "See all",
                         style: TextStyle(
                             fontWeight: FontWeight.w500,
-                            fontSize: 14,
-                            color: Colors.teal),
+                            fontSize: AppFonts.getHeadingTwo(context),
+                            color: AppColors.primary),
                       ),
                     ],
                   ),
@@ -218,16 +220,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 if (selectedIndex == 0) const SizedBox(height: 15),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
+                  children: [
                     Text(
                       "Upcoming Appointments",
-                      style:
-                          TextStyle(fontSize: 22, fontWeight: FontWeight.w800),
+                      style: TextStyle(
+                          fontSize: AppFonts.getHeadingTwo(context),
+                          fontWeight: FontWeight.w800),
                     ),
                     Icon(
                       Icons.sort,
-                      size: 25,
-                      color: Colors.teal,
+                      size: AppSizes.iconSize(context),
+                      color: AppColors.primary,
                     ),
                   ],
                 ),
@@ -274,14 +277,14 @@ class _HomeScreenState extends State<HomeScreen> {
     return Column(
       children: <Widget>[
         SizedBox(
-          height: 230,
+          height: AppSizes.cardHeight(context),
           child: ListView(
             scrollDirection: Axis.horizontal,
             children: <Widget>[
               _categoryCard1(
                 "Chemist & Drugist",
                 "350 + Stores",
-                color: Colors.teal.shade300,
+                color: AppColors.primary,
                 lightColor: Colors.teal.shade100,
               ),
               _categoryCard1(
@@ -318,11 +321,11 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _categoryCard1(String title, String subtitle,
       {required Color color, required Color lightColor}) {
     return Container(
-      width: 150,
-      margin: const EdgeInsets.all(8.0),
+      width: AppSizes.Within(context),
+      margin: EdgeInsets.all(10),
       decoration: BoxDecoration(
         color: color,
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: BorderRadius.circular(AppSizes.borderRadius(context)),
         boxShadow: [
           BoxShadow(
             color: lightColor,
@@ -340,10 +343,10 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             Text(
               title,
-              style: const TextStyle(
+              style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
-                fontSize: 16,
+                fontSize: AppFonts.getBodyText(context),
               ),
             ),
             const SizedBox(height: 8),
@@ -352,7 +355,7 @@ class _HomeScreenState extends State<HomeScreen> {
               style: TextStyle(
                 // ignore: deprecated_member_use
                 color: Colors.white.withOpacity(0.9),
-                fontSize: 14,
+                fontSize: AppFonts.getBodySmall(context),
               ),
             ),
           ],
@@ -368,11 +371,11 @@ class _HomeScreenState extends State<HomeScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           CircleAvatar(
-            radius: 28, // Adjusted icon size
+            radius: AppSizes.paddingLarge(context), // Adjusted icon size
             backgroundColor: Colors.white,
             child: Icon(
               icon,
-              size: 34, // Reduced icon size
+              size: AppSizes.iconSize(context), // Reduced icon size
               color: Colors.teal,
             ),
           ),
@@ -380,8 +383,10 @@ class _HomeScreenState extends State<HomeScreen> {
           Text(
             label,
             textAlign: TextAlign.center,
-            style: const TextStyle(
-                fontSize: 11, fontWeight: FontWeight.w900, color: Colors.white),
+            style: TextStyle(
+                fontSize: AppFonts.getCaption(context),
+                fontWeight: FontWeight.w900,
+                color: Colors.white),
           ),
         ],
       ),
@@ -400,42 +405,47 @@ class AppointmentCard extends StatelessWidget {
       margin: const EdgeInsets.all(5),
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: Colors.teal,
+        color: AppColors.primary,
         borderRadius: BorderRadius.circular(20),
       ),
       width: double.infinity,
-      height: 120,
+      height: AppSizes.buttonHeight(context),
       child: Row(
         children: [
           // Date Section
           Container(
+            height: AppSizes.HeighSmall(context),
+            width: AppSizes.inputFieldHeight(context),
             padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
             decoration: BoxDecoration(
               color: Colors.lightBlue,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius:
+                  BorderRadius.circular(AppSizes.borderRadius(context)),
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
                   appointment.date,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 24,
+                  style: TextStyle(
+                    color: AppColors.text,
+                    fontSize: AppFonts.getBodySmalltwo(context),
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
                   appointment.day,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
+                  style: TextStyle(
+                    color: AppColors.text,
+                    fontSize: AppFonts.getBodySmallThree(context),
                   ),
                 ),
               ],
             ),
           ),
-          const SizedBox(width: 16),
+          SizedBox(
+            width: AppSizes.borderRadius(context),
+          ),
           // Appointment Details Section
           Expanded(
             child: Column(
@@ -444,27 +454,25 @@ class AppointmentCard extends StatelessWidget {
               children: [
                 Text(
                   appointment.time,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 14,
+                  style: TextStyle(
+                    color: AppColors.text,
+                    fontSize: AppFonts.getBodySmalltwo(context),
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                const SizedBox(height: 8),
                 Text(
                   appointment.doctor,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
+                  style: TextStyle(
+                    color: AppColors.text,
+                    fontSize: AppFonts.getBodySmall(context),
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                const SizedBox(height: 4),
                 Text(
                   appointment.appointmentType,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 14,
+                  style: TextStyle(
+                    color: AppColors.text,
+                    fontSize: AppFonts.getBodySmalltwo(context),
                   ),
                 ),
               ],

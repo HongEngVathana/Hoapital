@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hospital/core/constants/app_fonts.dart';
+import 'package:hospital/core/constants/app_size.dart';
 
 class CustomAppBar extends StatelessWidget {
   const CustomAppBar({super.key});
@@ -8,12 +10,12 @@ class CustomAppBar extends StatelessWidget {
     return Container(
       color: Colors.white,
       padding: const EdgeInsets.all(15),
-      child: const Row(
+      child: Row(
         children: [
           // Menu Icon
           Icon(
             Icons.sort,
-            size: 28,
+            size: AppSizes.iconSize(context),
             color: Colors.teal,
           ),
           SizedBox(width: 10),
@@ -24,14 +26,14 @@ class CustomAppBar extends StatelessWidget {
               Text(
                 "Hello,",
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: AppFonts.getInputText(context),
                   color: Colors.grey,
                 ),
               ),
               Text(
                 "Chetra Pang",
                 style: TextStyle(
-                  fontSize: 28,
+                  fontSize: AppFonts.getInputText(context),
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
                 ),
@@ -44,13 +46,13 @@ class CustomAppBar extends StatelessWidget {
             children: [
               Icon(
                 Icons.notifications_none,
-                size: 28,
+                size: AppSizes.iconSize(context),
                 color: Colors.teal,
               ),
               SizedBox(width: 15),
               // Profile Picture
               CircleAvatar(
-                radius: 20,
+                radius: AppSizes.borderRadius(context),
                 backgroundImage: AssetImage(
                     'lib/assets/images/joseph.jpeg'), // Replace with your profile image path
               ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-
+import 'package:hospital/core/constants/app_fonts.dart';
+import 'package:hospital/core/constants/app_size.dart';
 
 const kcontentColor = Color(0xffF5F5F5);
 const kprimaryColor = Color(0xffff660e);
@@ -10,7 +11,7 @@ class MySearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 55,
+      height: AppSizes.bottomNavHeight(context),
       width: double.infinity,
       decoration: BoxDecoration(
         color: kcontentColor,
@@ -22,13 +23,16 @@ class MySearchBar extends StatelessWidget {
           Icon(
             Icons.search,
             color: Colors.teal,
-            size: 30,
+            size: AppSizes.iconSize(context),
           ),
           const SizedBox(width: 10),
-          const Flexible(
+          Flexible(
             child: TextField(
               decoration: InputDecoration(
-                  hintText: "Search...", border: InputBorder.none),
+                  hintText: "Search...",
+                  hintStyle:
+                      TextStyle(fontSize: AppFonts.getInputText(context)),
+                  border: InputBorder.none),
             ),
           ),
           Container(
@@ -41,6 +45,7 @@ class MySearchBar extends StatelessWidget {
               icon: Icon(
                 Icons.camera_alt,
                 color: Colors.teal,
+                size: AppSizes.iconSize(context),
               ))
         ],
       ),

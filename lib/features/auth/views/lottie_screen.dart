@@ -21,7 +21,7 @@ class _LottieScreenState extends State<LottieScreen> {
   void _navigateToHome() async {
     await Future.delayed(const Duration(seconds: 2));
     // ignore: use_build_context_synchronously
-    Navigator.pushReplacementNamed(context, Approutes.welcomes);
+    Navigator.pushReplacementNamed(context, Approutes.homes);
   }
 
   @override
@@ -44,8 +44,7 @@ class _LottieScreenState extends State<LottieScreen> {
       child: Text(
         "Simpaz Heath Welcome",
         style: TextStyle(
-          fontSize: AppFonts.headingOne,
-          fontFamily: AppFonts.primaryFont,
+          fontSize: AppFonts.getBodyText(context),
           color: AppColors.text,
         ),
       ),

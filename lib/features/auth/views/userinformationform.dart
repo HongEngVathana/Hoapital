@@ -65,36 +65,28 @@ class _UserinformationformState extends State<Userinformationform> {
                               border: OutlineInputBorder(),
                               labelText: "First Name"),
                         ),
-                        SizedBox(
-                          height: Appsizes.paddingLarge(context),
-                        ),
+                        SizedBox(height: 10),
                         TextFormField(
                           controller: _lastNameControllers[index],
                           decoration: const InputDecoration(
                               border: OutlineInputBorder(),
                               labelText: "Last Name"),
                         ),
-                        SizedBox(
-                          height: Appsizes.paddingLarge(context),
-                        ),
+                        SizedBox(height: 10),
                         TextFormField(
                           controller: _genderControllers[index],
                           decoration: const InputDecoration(
                               border: OutlineInputBorder(),
                               labelText: "Gender"),
                         ),
-                        SizedBox(
-                          height: Appsizes.paddingLarge(context),
-                        ),
+                        SizedBox(height: 10),
                         TextFormField(
                           controller: _dobControllers[index],
                           decoration: const InputDecoration(
                               border: OutlineInputBorder(),
                               labelText: "Date of Birth"),
                         ),
-                        SizedBox(
-                          height: Appsizes.paddingLarge(context),
-                        ),
+                        SizedBox(height: 10),
                         _buildSubmitButton(),
                       ],
                     ),

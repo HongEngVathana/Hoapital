@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:hospital/core/constants/app_size.dart';
 
 class ImageSlider extends StatefulWidget {
   final Function(int) onChange;
@@ -48,15 +49,15 @@ class _ImageSliderState extends State<ImageSlider> {
     return Stack(
       children: [
         SizedBox(
-          height: 220,
+          height: AppSizes.cardHeight(context),
           width: double.infinity,
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: BorderRadius.circular(AppSizes.borderRadius(context)),
             child: imagePaths.isEmpty
                 ? const Center(child: CircularProgressIndicator())
                 : CarouselSlider.builder(
                     options: CarouselOptions(
-                      height: 220,
+                      height: AppSizes.cardHeight(context),
                       autoPlay: true,
                       autoPlayInterval: const Duration(seconds: 3),
                       enlargeCenterPage: true,
@@ -78,7 +79,7 @@ class _ImageSliderState extends State<ImageSlider> {
         ),
         if (imagePaths.isNotEmpty)
           Positioned.fill(
-            bottom: 10,
+            bottom: AppSizes.buttonHeight(context),
             child: Align(
               alignment: Alignment.bottomCenter,
               child: Row(
@@ -91,7 +92,8 @@ class _ImageSliderState extends State<ImageSlider> {
                     height: 8,
                     margin: const EdgeInsets.only(right: 3),
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius:
+                          BorderRadius.circular(AppSizes.borderRadius(context)),
                       color: widget.currentSlide == index
                           ? Colors.black
                           : Colors.transparent,

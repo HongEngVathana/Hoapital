@@ -12,6 +12,8 @@ class PrescriptionScreen extends StatefulWidget {
 
 class _PrescriptionScreenState extends State<PrescriptionScreen> {
   late Future<List<Prescription>> prescriptions;
+  TextEditingController _searchController = TextEditingController();
+  String _searchQuery = "";
 
   @override
   void initState() {
@@ -26,27 +28,67 @@ class _PrescriptionScreenState extends State<PrescriptionScreen> {
         title: const Text("Prescription"),
         backgroundColor: AppColors.primary,
       ),
-      body: FutureBuilder<List<Prescription>>(
-        future: prescriptions,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text("Error: ${snapshot.error}"));
-          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Center(child: Text("No prescriptions found."));
-          }
+      body: Column(
+        children: [
+          // Search Bar
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: TextField(
+              controller: _searchController,
+              onChanged: (value) {
+                setState(() {
+                  _searchQuery = value.toLowerCase();
+                });
+              },
+              decoration: InputDecoration(
+                hintText: "Search...",
+                prefixIcon: const Icon(Icons.search),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+              ),
+            ),
+          ),
+          // Prescription List
+          Expanded(
+            child: FutureBuilder<List<Prescription>>(
+              future: prescriptions,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError) {
+                  return Center(child: Text("Error: ${snapshot.error}"));
+                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                  return const Center(child: Text("No prescriptions found."));
+                }
 
-          final prescriptionList = snapshot.data!;
-          return ListView.builder(
-            padding: const EdgeInsets.all(16.0),
-            itemCount: prescriptionList.length,
-            itemBuilder: (context, index) {
-              final prescription = prescriptionList[index];
-              return _buildPrescriptionCard(prescription);
-            },
-          );
-        },
+                final filteredPrescriptions = snapshot.data!
+                    .where((prescription) =>
+                        prescription.hospitalName
+                            .toLowerCase()
+                            .contains(_searchQuery) ||
+                        prescription.doctor
+                            .toLowerCase()
+                            .contains(_searchQuery))
+                    .toList();
+
+                if (filteredPrescriptions.isEmpty) {
+                  return const Center(
+                      child: Text("No prescriptions match your search."));
+                }
+
+                return ListView.builder(
+                  padding: const EdgeInsets.all(16.0),
+                  itemCount: filteredPrescriptions.length,
+                  itemBuilder: (context, index) {
+                    final prescription = filteredPrescriptions[index];
+                    return _buildPrescriptionCard(prescription);
+                  },
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
