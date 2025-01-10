@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:hospital/core/constants/app_colors.dart';
 import 'package:hospital/features/auth/views/home_screen.dart';
 import 'package:hospital/pages/todolist_page.dart';
 import 'package:image_picker/image_picker.dart';
@@ -35,7 +36,7 @@ class _InsuranceScreenState extends State<InsuranceScreen> {
       appBar: AppBar(
         title: const Text(
           "Insurace Information",
-          style: TextStyle(color: Colors.teal),
+          style: TextStyle(color: AppColors.primary),
         ),
       ),
       body: Padding(
@@ -56,7 +57,9 @@ class _InsuranceScreenState extends State<InsuranceScreen> {
             const Text(
               "Required *",
               style: TextStyle(
-                  fontSize: 14, fontWeight: FontWeight.bold, color: Colors.red),
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.error),
             ),
             const SizedBox(height: 16),
             _buildImageUploadCard('Front of insurance card', true, _frontImage),
@@ -80,7 +83,7 @@ class _InsuranceScreenState extends State<InsuranceScreen> {
                     ),
                     child: const Text(
                       "Back",
-                      style: TextStyle(color: Colors.white, fontSize: 16),
+                      style: TextStyle(color: AppColors.text, fontSize: 16),
                     ),
                   ),
                 ),
@@ -95,7 +98,7 @@ class _InsuranceScreenState extends State<InsuranceScreen> {
                               builder: (context) => InsuranceInfo()));
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.teal,
+                      backgroundColor: AppColors.primary,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20.0),
                       ),
@@ -103,7 +106,7 @@ class _InsuranceScreenState extends State<InsuranceScreen> {
                     ),
                     child: const Text(
                       "Save & Continue",
-                      style: TextStyle(color: Colors.white, fontSize: 16),
+                      style: TextStyle(color: AppColors.text, fontSize: 16),
                     ),
                   ),
                 ),
@@ -132,12 +135,12 @@ class _InsuranceScreenState extends State<InsuranceScreen> {
           child: Container(
             height: 150,
             decoration: BoxDecoration(
-              border: Border.all(color: Colors.teal),
+              border: Border.all(color: AppColors.primary),
               borderRadius: BorderRadius.circular(8),
             ),
             child: image == null
                 ? const Center(
-                    child: Icon(Icons.add_a_photo, color: Colors.teal))
+                    child: Icon(Icons.add_a_photo, color: AppColors.primary))
                 : Image.file(
                     File(image.path),
                     fit: BoxFit.cover,
@@ -164,12 +167,12 @@ class InsuranceInfo extends StatelessWidget {
       appBar: AppBar(
         title: const Text(
           "Insurance Information",
-          style: TextStyle(color: Colors.teal),
+          style: TextStyle(color: AppColors.primary),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.text,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.teal),
+          icon: const Icon(Icons.arrow_back, color: AppColors.primary),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -182,7 +185,9 @@ class InsuranceInfo extends StatelessWidget {
             const Text(
               "Required *",
               style: TextStyle(
-                  fontSize: 14, fontWeight: FontWeight.bold, color: Colors.red),
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.error),
             ),
             const SizedBox(height: 16),
             _buildInfoField("Insurance name *", insuranceName),
@@ -214,7 +219,7 @@ class InsuranceInfo extends StatelessWidget {
                     ),
                     child: const Text(
                       "Back",
-                      style: TextStyle(color: Colors.white, fontSize: 16),
+                      style: TextStyle(color: AppColors.text, fontSize: 16),
                     ),
                   ),
                 ),
@@ -229,7 +234,7 @@ class InsuranceInfo extends StatelessWidget {
                               builder: (context) => const PersonalInfo()));
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.teal,
+                      backgroundColor: AppColors.primary,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20.0),
                       ),
@@ -237,7 +242,7 @@ class InsuranceInfo extends StatelessWidget {
                     ),
                     child: const Text(
                       "Save & Continue",
-                      style: TextStyle(color: Colors.white, fontSize: 16),
+                      style: TextStyle(color: AppColors.text, fontSize: 16),
                     ),
                   ),
                 ),
@@ -286,12 +291,12 @@ class _PersonalInfoState extends State<PersonalInfo> {
       appBar: AppBar(
         title: const Text(
           "Insurance Information",
-          style: TextStyle(color: Colors.teal),
+          style: TextStyle(color: AppColors.primary),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.text,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.teal),
+          icon: const Icon(Icons.arrow_back, color: AppColors.primary),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -305,14 +310,16 @@ class _PersonalInfoState extends State<PersonalInfo> {
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
-                color: Colors.teal,
+                color: AppColors.primary,
               ),
             ),
             const SizedBox(height: 16),
             const Text(
               "Required *",
               style: TextStyle(
-                  fontSize: 14, fontWeight: FontWeight.bold, color: Colors.red),
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.error),
             ),
             const SizedBox(height: 16),
             _buildTextField("Claim group number", claimGroupNumber),
@@ -339,7 +346,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                     ),
                     child: const Text(
                       "Back",
-                      style: TextStyle(color: Colors.white, fontSize: 16),
+                      style: TextStyle(color: AppColors.text, fontSize: 16),
                     ),
                   ),
                 ),
@@ -353,7 +360,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                               builder: (context) => const SubscriberInfo()));
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.teal,
+                      backgroundColor: AppColors.primary,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20.0),
                       ),
@@ -361,7 +368,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                     ),
                     child: const Text(
                       "Save & Continue",
-                      style: TextStyle(color: Colors.white, fontSize: 16),
+                      style: TextStyle(color: AppColors.text, fontSize: 16),
                     ),
                   ),
                 ),
@@ -444,12 +451,12 @@ class _SubscriberInfoState extends State<SubscriberInfo> {
       appBar: AppBar(
         title: const Text(
           "Insurance Information",
-          style: TextStyle(color: Colors.teal),
+          style: TextStyle(color: AppColors.primary),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.text,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.teal),
+          icon: const Icon(Icons.arrow_back, color: AppColors.primary),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -462,7 +469,9 @@ class _SubscriberInfoState extends State<SubscriberInfo> {
             const Text(
               "Required *",
               style: TextStyle(
-                  fontSize: 14, fontWeight: FontWeight.bold, color: Colors.red),
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.error),
             ),
             const SizedBox(height: 16),
             _buildSubscriberField("Subscriber SSN *", subscriberSSN),
@@ -489,7 +498,7 @@ class _SubscriberInfoState extends State<SubscriberInfo> {
                     ),
                     child: const Text(
                       "Back",
-                      style: TextStyle(color: Colors.white, fontSize: 16),
+                      style: TextStyle(color: AppColors.text, fontSize: 16),
                     ),
                   ),
                 ),
@@ -503,7 +512,7 @@ class _SubscriberInfoState extends State<SubscriberInfo> {
                               builder: (context) => const HomeScreen()));
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.teal,
+                      backgroundColor: AppColors.primary,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20.0),
                       ),
@@ -511,7 +520,7 @@ class _SubscriberInfoState extends State<SubscriberInfo> {
                     ),
                     child: const Text(
                       "Save & Continue",
-                      style: TextStyle(color: Colors.white, fontSize: 16),
+                      style: TextStyle(color: AppColors.text, fontSize: 16),
                     ),
                   ),
                 ),

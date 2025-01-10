@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hospital/features/auth/views/home_screen.dart';
-import 'package:hospital/pages/profile_page.dart';
-import 'package:hospital/pages/todolist_page.dart';
 
 // Screen 1: Personal Information
 class PersonalInfoScreen extends StatelessWidget {

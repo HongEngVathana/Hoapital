@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hospital/core/constants/app_colors.dart';
 
 class HistoryPage extends StatefulWidget {
   const HistoryPage({super.key});
@@ -12,7 +13,7 @@ class _HistoryPageState extends State<HistoryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.text,
         elevation: 0,
         title: const Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -23,7 +24,7 @@ class _HistoryPageState extends State<HistoryPage> {
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.notifications, color: Colors.teal),
+            icon: const Icon(Icons.notifications, color: AppColors.primary),
             onPressed: () {},
           ),
         ],

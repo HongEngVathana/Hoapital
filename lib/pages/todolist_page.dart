@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hospital/core/constants/app_colors.dart';
 import 'package:hospital/features/auth/views/editProfile_screen.dart';
 import 'package:hospital/features/auth/views/insurance_screen.dart';
 import 'package:hospital/features/auth/views/paymentbill_screen.dart';
@@ -17,11 +18,11 @@ class _TodolistPageState extends State<TodolistPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.background,
         elevation: 0,
         title: const Text(
           "Things you have To-Do",
-          style: TextStyle(color: Colors.teal, fontWeight: FontWeight.bold),
+          style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
       ),
@@ -58,7 +59,7 @@ class _TodolistPageState extends State<TodolistPage> {
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
-                    color: Colors.teal,
+                    color: AppColors.primary,
                   ),
                 ),
                 TextButton(
@@ -67,7 +68,7 @@ class _TodolistPageState extends State<TodolistPage> {
                   },
                   child: const Text(
                     "View All",
-                    style: TextStyle(color: Colors.teal, fontSize: 14),
+                    style: TextStyle(color: AppColors.primary, fontSize: 14),
                   ),
                 ),
               ],
@@ -81,7 +82,7 @@ class _TodolistPageState extends State<TodolistPage> {
                   title: "Verify your Account",
                   subtitle: "4 records found",
                   icon: Icons.person,
-                  iconColor: Colors.teal,
+                  iconColor: AppColors.primary,
                   onTap: () {
                     Navigator.push(
                         context,
@@ -93,14 +94,14 @@ class _TodolistPageState extends State<TodolistPage> {
                   title: "Fill Emergency Form",
                   subtitle: "4 records found",
                   icon: Icons.file_copy,
-                  iconColor: Colors.teal,
+                  iconColor: AppColors.primary,
                   onTap: () {},
                 ),
                 ToDoItem(
                   title: "Fill Insurance Form",
                   subtitle: "4 records found",
                   icon: Icons.assignment_turned_in,
-                  iconColor: Colors.teal,
+                  iconColor: AppColors.primary,
                   onTap: () {
                     Navigator.push(
                         context,
@@ -112,7 +113,7 @@ class _TodolistPageState extends State<TodolistPage> {
                   title: "Payment Bill",
                   subtitle: "4 records found",
                   icon: Remix.refund_2_line,
-                  iconColor: Colors.teal,
+                  iconColor: AppColors.primary,
                   onTap: () {
                     Navigator.push(
                         context,
@@ -124,7 +125,7 @@ class _TodolistPageState extends State<TodolistPage> {
                   title: "Prescription",
                   subtitle: "4 records found",
                   icon: Remix.dossier_line,
-                  iconColor: Colors.teal,
+                  iconColor: AppColors.primary,
                   onTap: () {
                     Navigator.push(
                         context,
@@ -136,7 +137,7 @@ class _TodolistPageState extends State<TodolistPage> {
                   title: "Receipt",
                   subtitle: "4 records found",
                   icon: Icons.account_balance_wallet,
-                  iconColor: Colors.teal,
+                  iconColor: AppColors.primary,
                   onTap: () {},
                 ),
               ],
@@ -171,7 +172,7 @@ class ToDoItem extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColors.text,
           borderRadius: BorderRadius.circular(10),
           boxShadow: [
             BoxShadow(
@@ -191,7 +192,7 @@ class ToDoItem extends StatelessWidget {
             title,
             style: const TextStyle(
               fontWeight: FontWeight.bold,
-              color: Colors.teal,
+              color: AppColors.primary,
             ),
           ),
           subtitle: Text(subtitle),
@@ -199,7 +200,7 @@ class ToDoItem extends StatelessWidget {
               ? Text(
                   status!,
                   style: const TextStyle(
-                    color: Colors.teal,
+                    color: AppColors.primary,
                     fontWeight: FontWeight.bold,
                   ),
                 )
@@ -223,7 +224,7 @@ class DetailsScreeen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
-        backgroundColor: Colors.teal,
+        backgroundColor: AppColors.primary,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:hospital/core/constants/app_colors.dart';
 
 class AppointmentsScreen extends StatefulWidget {
   @override
@@ -34,13 +35,13 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
       appBar: AppBar(
         title: Text(
           "Appointments",
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: AppColors.text),
         ),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          icon: const Icon(Icons.arrow_back, color: AppColors.text),
           onPressed: () => Navigator.pop(context),
         ),
-        backgroundColor: Colors.teal,
+        backgroundColor: AppColors.primary,
       ),
       body: Column(
         children: [
@@ -106,7 +107,7 @@ class TabButton extends StatelessWidget {
       child: Text(
         label,
         style: TextStyle(
-          color: isActive ? Colors.teal : Colors.grey,
+          color: isActive ? AppColors.primary : AppColors.secondary,
           fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
         ),
       ),
@@ -132,7 +133,7 @@ class AppointmentCard extends StatelessWidget {
             Container(
               padding: EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: Colors.teal,
+                color: AppColors.primary,
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Column(
@@ -140,7 +141,7 @@ class AppointmentCard extends StatelessWidget {
                   Text(
                     appointment['date'],
                     style: TextStyle(
-                      color: Colors.white,
+                      color: AppColors.text,
                       fontWeight: FontWeight.bold,
                       fontSize: 24,
                     ),
@@ -148,7 +149,7 @@ class AppointmentCard extends StatelessWidget {
                   Text(
                     appointment['day'],
                     style: TextStyle(
-                      color: Colors.white,
+                      color: AppColors.text,
                       fontSize: 16,
                     ),
                   ),

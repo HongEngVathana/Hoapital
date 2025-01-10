@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hospital/core/constants/app_colors.dart';
 import 'package:hospital/widgets/search_bar.dart';
 import 'package:remixicon/remixicon.dart';
 
@@ -15,19 +16,19 @@ class DiagnosticsServicesScreen extends StatelessWidget {
           },
           icon: const Icon(
             Icons.arrow_back,
-            color: Colors.teal,
+            color: AppColors.primary,
           ),
         ),
         title: const Text(
           "Diagnostics",
-          style: TextStyle(color: Colors.teal),
+          style: TextStyle(color: AppColors.primary),
         ),
         actions: [
           TextButton(
             onPressed: () {},
             child: const Icon(
               Icons.notifications_active,
-              color: Colors.teal,
+              color: AppColors.primary,
               size: 30,
             ),
           ),
@@ -54,7 +55,7 @@ class DiagnosticsServicesScreen extends StatelessWidget {
                     onPressed: () {},
                     child: const Text(
                       "See all",
-                      style: TextStyle(color: Colors.teal),
+                      style: TextStyle(color: AppColors.primary),
                     ),
                   ),
                 ],
@@ -88,7 +89,7 @@ class DiagnosticsServicesScreen extends StatelessWidget {
                     onPressed: () {},
                     child: const Text(
                       "See all",
-                      style: TextStyle(color: Colors.teal),
+                      style: TextStyle(color: AppColors.primary),
                     ),
                   ),
                 ],
@@ -111,7 +112,7 @@ class DiagnosticsServicesScreen extends StatelessWidget {
           radius: 35, // Increase the radius to make the background bigger
           child: Icon(
             icon,
-            color: Colors.teal,
+            color: AppColors.primary,
             size: 45, // Keep the icon size the same
           ),
         ),
