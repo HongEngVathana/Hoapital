@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hospital/core/constants/app_colors.dart';
+import 'package:hospital/features/auth/models/todoList_model.dart';
 import 'package:hospital/features/auth/views/editProfile_screen.dart';
 import 'package:hospital/features/auth/views/insurance_screen.dart';
 import 'package:hospital/features/auth/views/paymentbill_screen.dart';
 import 'package:hospital/features/auth/views/prescription_screen.dart';
+import 'package:hospital/services/todoList_service.dart';
 import 'package:remixicon/remixicon.dart';
 
 class TodolistPage extends StatefulWidget {
@@ -14,6 +16,14 @@ class TodolistPage extends StatefulWidget {
 }
 
 class _TodolistPageState extends State<TodolistPage> {
+  late Future<List<TodoItem>> _todoItems;
+
+  @override
+  void initState() {
+    super.initState();
+    _todoItems = TodoService().fetchTodoItems();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +32,8 @@ class _TodolistPageState extends State<TodolistPage> {
         elevation: 0,
         title: const Text(
           "Things you have To-Do",
-          style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold),
+          style:
+              TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
       ),
