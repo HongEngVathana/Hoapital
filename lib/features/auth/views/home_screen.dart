@@ -86,7 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            SizedBox(height: AppSizes.headerHeight(context)),
+                            SizedBox(height: AppSizes.buttonHeight(context)),
                             ElevatedButton(
                               onPressed: () {
                                 Navigator.push(
@@ -409,13 +409,13 @@ class AppointmentCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
       ),
       width: double.infinity,
-      height: AppSizes.buttonHeight(context),
+      height: AppSizes.cardsmallHeight(context),
       child: Row(
         children: [
           // Date Section
           Container(
-            height: AppSizes.HeighSmall(context),
-            width: AppSizes.inputFieldHeight(context),
+            height: AppSizes.cardHeight(context),
+            width: AppSizes.buttonHeight(context),
             padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
             decoration: BoxDecoration(
               color: Colors.lightBlue,
@@ -472,7 +472,7 @@ class AppointmentCard extends StatelessWidget {
                   appointment.appointmentType,
                   style: TextStyle(
                     color: AppColors.text,
-                    fontSize: AppFonts.getBodySmalltwo(context),
+                    fontSize: AppFonts.getBodySmallThree(context),
                   ),
                 ),
               ],

@@ -23,7 +23,7 @@ class AppSizes {
 
   // Scalable Button Height
   static double buttonHeight(BuildContext context) =>
-      MediaQuery.of(context).size.width * 0.20; // Height of buttons
+      MediaQuery.of(context).size.width * 0.12; // Height of buttons
 
   // Scalable Input Field Height
   static double inputFieldHeight(BuildContext context) =>
@@ -35,7 +35,9 @@ class AppSizes {
 
   // Scalable Card Size (for general UI cards)
   static double cardHeight(BuildContext context) =>
-      MediaQuery.of(context).size.width * 0.50; // Height of cards
+      MediaQuery.of(context).size.width * 0.5; // Height of cards
+  static double cardsmallHeight(BuildContext context) =>
+      MediaQuery.of(context).size.width * 0.3; // Height of cards
 
   static double cardWidth(BuildContext context) =>
       MediaQuery.of(context).size.width * 0.9; // Width of cards
@@ -59,6 +61,4 @@ class AppSizes {
       MediaQuery.of(context).size.width * 0.30; // Bottom Navigation Bar height
   static double Heighin(BuildContext context) =>
       MediaQuery.of(context).size.width * 0.30; // Bottom Navigation Bar height
-  static double HeighSmall(BuildContext context) =>
-      MediaQuery.of(context).size.width * 0.20; // Bottom Navigation Bar height
 }
