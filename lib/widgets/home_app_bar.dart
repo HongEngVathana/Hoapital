@@ -52,7 +52,7 @@ class CustomAppBar extends StatelessWidget {
               SizedBox(width: 15),
               // Profile Picture
               CircleAvatar(
-                radius: AppSizes.borderRadius(context),
+                radius: AppSizes.iconSizeTwo(context),
                 backgroundImage: AssetImage(
                     'lib/assets/images/joseph.jpeg'), // Replace with your profile image path
               ),

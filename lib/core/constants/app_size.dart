@@ -20,7 +20,9 @@ class AppSizes {
   static double iconSize(BuildContext context) =>
       MediaQuery.of(context).size.width *
       0.08; // Icon Size (based on screen width)
-
+  static double iconSizeTwo(BuildContext context) =>
+      MediaQuery.of(context).size.width *
+      0.06; // Icon Size (based on screen width)
   // Scalable Button Height
   static double buttonHeight(BuildContext context) =>
       MediaQuery.of(context).size.width * 0.12; // Height of buttons
