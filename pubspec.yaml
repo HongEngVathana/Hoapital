@@ -76,6 +76,7 @@ flutter:
     - lib/assets/jsons/billpayment_data.json
     - lib/assets/jsons/prescription_data.json
     - lib/assets/jsons/todoList_data.json
+    - lib/assets/jsons/mock_category_data.json
     - lib/assets/images/
 
   # An image asset can refer to one or more resolution-specific "variants", see

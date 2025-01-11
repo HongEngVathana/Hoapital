@@ -4,12 +4,14 @@ import 'package:hospital/core/constants/app_colors.dart';
 import 'package:hospital/core/constants/app_fonts.dart';
 import 'package:hospital/core/constants/app_size.dart';
 import 'package:hospital/features/auth/models/appointment_model.dart';
+import 'package:hospital/features/auth/models/home_category_model.dart';
 import 'package:hospital/features/auth/views/Diagnostics_screen.dart';
 import 'package:hospital/features/auth/views/appointment_screen.dart';
 import 'package:hospital/features/auth/views/editProfile_screen.dart';
 import 'package:hospital/features/auth/views/insurance_screen.dart';
 import 'package:hospital/pages/todolist_page.dart';
 import 'package:hospital/services/appointment_service.dart';
+import 'package:hospital/services/home_category_service.dart';
 import 'package:hospital/widgets/home_app_bar.dart';
 import 'package:hospital/widgets/image_slider.dart';
 import 'package:hospital/widgets/search_bar.dart';
@@ -27,6 +29,8 @@ class _HomeScreenState extends State<HomeScreen> {
   int selectedIndex = 0;
 
   late Future<List<Appointment>> appointments;
+  final Future<List<Category>> categoriesFuture =
+      CategoryService.loadCategories();
 
   @override
   void initState() {
@@ -215,7 +219,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ],
                   ),
-                _category(),
+                // Calling Category from func
+                _categorySection(categoriesFuture),
+
                 const SizedBox(height: 20),
                 if (selectedIndex == 0) const SizedBox(height: 15),
                 Row(
@@ -271,8 +277,90 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-  // Error: type _Map<String, dynamic> is not a subtype of type  'list<dynamic>
+  // Func Test
 
+  // For Category Card
+
+  Widget _categoryCard(String title, String subtitle,
+      {required Color color, required Color lightColor}) {
+    return Container(
+      width: 150,
+      margin: const EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.circular(15),
+        boxShadow: [
+          BoxShadow(
+            color: lightColor,
+            blurRadius: 10,
+            spreadRadius: 5,
+            offset: const Offset(0, 5),
+          ),
+        ],
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              style: const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              subtitle,
+              style: TextStyle(
+                color: Colors.white.withOpacity(0.9),
+                fontSize: 14,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _categorySection(Future<List<Category>> categoriesFuture) {
+    return FutureBuilder<List<Category>>(
+      future: categoriesFuture,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
+        }
+
+        if (!snapshot.hasData || snapshot.data!.isEmpty) {
+          return const Center(child: Text('No categories available.'));
+        }
+
+        return SizedBox(
+          height: 200,
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            children: snapshot.data!
+                .map((category) => _categoryCard(
+                      category.title,
+                      category.subtitle,
+                      color: category.color,
+                      lightColor: category.lightColor,
+                    ))
+                .toList(),
+          ),
+        );
+      },
+    );
+  }
+
+  // org
   Widget _category() {
     return Column(
       children: <Widget>[

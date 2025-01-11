@@ -1,0 +1,32 @@
+[
+  {
+    "title": "Chetra & Pang",
+    "subtitle": "350 + Stores",
+    "color": "#FF5722",
+    "lightColor": "#FFCCBC"
+  },
+  {
+    "title": "Covid - 19 Specialist",
+    "subtitle": "899 Doctors",
+    "color": "#03A9F4",
+    "lightColor": "#B3E5FC"
+  },
+  {
+    "title": "Cardiologists Specialist",
+    "subtitle": "500 + Doctors",
+    "color": "#FF9800",
+    "lightColor": "#FFE0B2"
+  },
+  {
+    "title": "Dermatologist",
+    "subtitle": "300 + Doctors",
+    "color": "#009688",
+    "lightColor": "#B2DFDB"
+  },
+  {
+    "title": "General Surgeon",
+    "subtitle": "500 + Doctors",
+    "color": "#3F51B5",
+    "lightColor": "#C5CAE9"
+  }
+]
