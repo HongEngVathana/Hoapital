@@ -239,6 +239,7 @@ class _IdentificationScreenState extends State<IdentificationScreen> {
                 _buildTextField("Address", addressController),
                 const Spacer(),
                 _buildNavigationButtons(context),
+                const SizedBox(height: 24.0),
               ],
             ),
           );
@@ -335,7 +336,7 @@ class _IdentificationScreenState extends State<IdentificationScreen> {
       ],
     );
   }
-} // For JSON handling
+}
 
 class MeasurementsScreen extends StatefulWidget {
   const MeasurementsScreen({super.key});
@@ -349,12 +350,21 @@ class _MeasurementsScreenState extends State<MeasurementsScreen> {
   final TextEditingController weightController = TextEditingController();
   final TextEditingController bmiController = TextEditingController();
 
+  late Future<PersonalInfo> personalInfoFuture;
+
   @override
   void initState() {
     super.initState();
-    _fetchDataFromJson();
+    personalInfoFuture = PersonalInfoService().loadPersonalInfo();
 
-    // Fetch data when screen initializes
+    // Set initial height and weight and calculate BMI
+    personalInfoFuture.then((personalInfo) {
+      heightController.text = personalInfo.height;
+      weightController.text = personalInfo.weight;
+      _calculateBMI();
+    });
+
+    // listeners to update BMI dynamically
     heightController.addListener(_calculateBMI);
     weightController.addListener(_calculateBMI);
   }
@@ -365,26 +375,6 @@ class _MeasurementsScreenState extends State<MeasurementsScreen> {
     weightController.dispose();
     bmiController.dispose();
     super.dispose();
-  }
-
-  /// Simulate fetching data from a JSON object
-  Future<void> _fetchDataFromJson() async {
-    // Simulated JSON response
-    const jsonData = '''
-      {
-        "height": 170,
-        "weight": 65
-      }
-    ''';
-
-    // Parse the JSON data
-    final Map<String, dynamic> data = jsonDecode(jsonData);
-
-    // Update controllers with the fetched data
-    setState(() {
-      heightController.text = data['height'].toString();
-      weightController.text = data['weight'].toString();
-    });
   }
 
   void _calculateBMI() {
@@ -422,117 +412,102 @@ class _MeasurementsScreenState extends State<MeasurementsScreen> {
           onPressed: () => Navigator.pop(context),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildTextField(
-              label: "Height (cm)",
-              controller: heightController,
-              hintText: "Enter your height in cm",
-              icon: Icons.height,
-              inputType: TextInputType.number,
-            ),
-            const SizedBox(height: 16),
-            _buildTextField(
-              label: "Weight (kg)",
-              controller: weightController,
-              hintText: "Enter your weight in kg",
-              icon: Icons.monitor_weight,
-              inputType: TextInputType.number,
-            ),
-            const SizedBox(height: 16),
-            _buildTextField(
-              label: "BMI",
-              controller: bmiController,
-              isReadOnly: true,
-              hintText: "Your BMI will be calculated here",
-              icon: Icons.calculate,
-            ),
-            const Spacer(),
-            Row(
+      body: FutureBuilder<PersonalInfo>(
+        future: personalInfoFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          } else if (!snapshot.hasData) {
+            return const Center(child: Text("No data available"));
+          }
+
+          // ignore: unused_local_variable
+          final personalInfo = snapshot.data!;
+          return Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.pop(context); // Navigate back
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.grey,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                      ),
-                      padding: const EdgeInsets.symmetric(vertical: 16.0),
-                    ),
-                    child: const Text(
-                      "Back",
-                      style: TextStyle(color: Colors.white, fontSize: 16),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 16.0),
-                Expanded(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      if (heightController.text.isEmpty ||
-                          weightController.text.isEmpty) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                              content: Text(
-                                  "Please fill in height and weight fields.")),
-                        );
-                        return;
-                      }
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const HomeScreen(),
+                _buildTextField("Height (cm)", heightController),
+                const SizedBox(height: 16),
+                _buildTextField("Weight (kg)", weightController),
+                const SizedBox(height: 16),
+                _buildTextField("BMI", bmiController),
+                const Spacer(),
+                Row(
+                  children: [
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.pop(context); // Navigate back
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.grey,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          padding: const EdgeInsets.symmetric(vertical: 16.0),
                         ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.teal,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
+                        child: const Text(
+                          "Back",
+                          style: TextStyle(color: Colors.white, fontSize: 16),
+                        ),
                       ),
-                      padding: const EdgeInsets.symmetric(vertical: 16.0),
                     ),
-                    child: const Text(
-                      "Submit",
-                      style: TextStyle(color: Colors.white, fontSize: 16),
+                    const SizedBox(width: 16.0),
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          if (heightController.text.isEmpty ||
+                              weightController.text.isEmpty) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content: Text(
+                                      "Please fill in height and weight fields.")),
+                            );
+                            return;
+                          }
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const HomeScreen(),
+                            ),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.teal,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          padding: const EdgeInsets.symmetric(vertical: 16.0),
+                        ),
+                        child: const Text(
+                          "Submit",
+                          style: TextStyle(color: Colors.white, fontSize: 16),
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
+                const SizedBox(height: 24.0),
               ],
             ),
-            const SizedBox(height: 24.0),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
 
-  Widget _buildTextField({
-    required String label,
-    required TextEditingController controller,
-    bool isReadOnly = false,
-    String? hintText,
-    IconData? icon,
-    TextInputType inputType = TextInputType.text,
-  }) {
+  Widget _buildTextField(String label, TextEditingController controller) {
     return TextField(
       controller: controller,
-      readOnly: isReadOnly,
-      keyboardType: inputType,
       decoration: InputDecoration(
-        labelText: label,
-        hintText: hintText,
-        prefixIcon: icon != null ? Icon(icon) : null,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8.0),
-        ),
-      ),
+          labelText: label,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8.0),
+          )),
     );
   }
 }
