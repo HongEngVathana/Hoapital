@@ -1,18 +1,39 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:hospital/features/auth/models/editProfile_model.dart';
 import 'package:hospital/features/auth/views/home_screen.dart';
+import 'package:hospital/services/editProfile_service.dart';
+import 'package:remixicon/remixicon.dart';
 
-// Screen 1: Personal Information
-class PersonalInfoScreen extends StatelessWidget {
+class PersonalInfoScreen extends StatefulWidget {
+  const PersonalInfoScreen({Key? key}) : super(key: key);
+
+  @override
+  _PersonalInfoScreenState createState() => _PersonalInfoScreenState();
+}
+
+class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
   final TextEditingController fullNameEnglishController =
-      TextEditingController(text: "John Doe");
-  final TextEditingController fullNameKhmerController =
-      TextEditingController(text: "ជន ដូ");
-  final TextEditingController emailController =
-      TextEditingController(text: "john.doe@example.com");
-  final TextEditingController phoneNumberController =
-      TextEditingController(text: "0123456789");
+      TextEditingController();
+  final TextEditingController fullNameKhmerController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController phoneNumberController = TextEditingController();
 
-  PersonalInfoScreen({super.key});
+  late Future<PersonalInfo> personalInfoFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    // Load personal info data
+    personalInfoFuture = PersonalInfoService().loadPersonalInfo();
+    personalInfoFuture.then((personalInfo) {
+      fullNameEnglishController.text = personalInfo.fullNameEnglish;
+      fullNameKhmerController.text = personalInfo.fullNameKhmer;
+      emailController.text = personalInfo.email;
+      phoneNumberController.text = personalInfo.phoneNumber;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,85 +50,92 @@ class PersonalInfoScreen extends StatelessWidget {
           onPressed: () => Navigator.pop(context),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              "Personal Information",
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Colors.teal,
-              ),
-            ),
-            const SizedBox(height: 16),
-            _buildTextField("Full name in English", fullNameEnglishController),
-            const SizedBox(height: 16),
-            _buildTextField("Full name in Khmer", fullNameKhmerController),
-            const SizedBox(height: 16),
-            _buildTextField("Email", emailController),
-            const SizedBox(height: 16),
-            _buildTextField("Phone number", phoneNumberController),
+      body: FutureBuilder<PersonalInfo>(
+        future: personalInfoFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          } else if (!snapshot.hasData) {
+            return const Center(child: Text("No data available"));
+          }
 
-            // Spacer to push the buttons to the bottom
-            const Spacer(),
-
-            // Buttons aligned as per the image
-            Row(
+          // ignore: unused_local_variable
+          final personalInfo = snapshot.data!;
+          return Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Back Button
-                Expanded(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.pop(context); // Navigate back
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.grey,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                      ),
-                      padding: const EdgeInsets.symmetric(vertical: 16.0),
-                    ),
-                    child: const Text(
-                      "Back",
-                      style: TextStyle(color: Colors.white, fontSize: 16),
-                    ),
+                const Text(
+                  "Personal Information",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.teal,
                   ),
                 ),
-                const SizedBox(width: 16.0), // Space between buttons
-                // Next Button
-                Expanded(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const IdentificationScreen(),
+                const SizedBox(height: 16),
+                _buildTextField(
+                    "Full name in English", fullNameEnglishController),
+                const SizedBox(height: 16),
+                _buildTextField("Full name in Khmer", fullNameKhmerController),
+                const SizedBox(height: 16),
+                _buildTextField("Email", emailController),
+                const SizedBox(height: 16),
+                _buildTextField("Phone number", phoneNumberController),
+                const Spacer(),
+                Row(
+                  children: [
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: () => Navigator.pop(context),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.grey,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          padding: const EdgeInsets.symmetric(vertical: 16.0),
                         ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.teal,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
+                        child: const Text(
+                          "Back",
+                          style: TextStyle(color: Colors.white, fontSize: 16),
+                        ),
                       ),
-                      padding: const EdgeInsets.symmetric(vertical: 16.0),
                     ),
-                    child: const Text(
-                      "Next",
-                      style: TextStyle(color: Colors.white, fontSize: 16),
+                    const SizedBox(width: 16.0),
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  const IdentificationScreen(),
+                            ),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.teal,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          padding: const EdgeInsets.symmetric(vertical: 16.0),
+                        ),
+                        child: const Text(
+                          "Next",
+                          style: TextStyle(color: Colors.white, fontSize: 16),
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
+                const SizedBox(height: 24.0),
               ],
             ),
-
-            // Add bottom padding to ensure proper positioning
-            const SizedBox(height: 24.0),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
@@ -125,7 +153,6 @@ class PersonalInfoScreen extends StatelessWidget {
   }
 }
 
-// Screen 2: Identification
 class IdentificationScreen extends StatefulWidget {
   const IdentificationScreen({super.key});
 
@@ -134,14 +161,25 @@ class IdentificationScreen extends StatefulWidget {
 }
 
 class _IdentificationScreenState extends State<IdentificationScreen> {
-  final TextEditingController idController =
-      TextEditingController(text: "123456789");
-  final TextEditingController dobController =
-      TextEditingController(text: "1990-01-01");
-  final TextEditingController addressController =
-      TextEditingController(text: "123 Main Street, City");
+  final TextEditingController idController = TextEditingController();
+  final TextEditingController driverIDController = TextEditingController();
+  final TextEditingController dobController = TextEditingController();
+  final TextEditingController addressController = TextEditingController();
 
-  String? selectedGender; // Track the selected gender
+  String? selectedGender = "Male"; // Default value
+  late Future<PersonalInfo> personalInfoFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    personalInfoFuture = PersonalInfoService().loadPersonalInfo();
+    personalInfoFuture.then((personalInfo) {
+      idController.text = personalInfo.id;
+      driverIDController.text = personalInfo.driverID;
+      dobController.text = personalInfo.dob;
+      addressController.text = personalInfo.address;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -158,78 +196,53 @@ class _IdentificationScreenState extends State<IdentificationScreen> {
           onPressed: () => Navigator.pop(context),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildTextField("Identification", idController),
-            const SizedBox(height: 16),
-            _buildTextField("Driver License", idController),
-            const SizedBox(height: 16),
-            _buildTextField("Date of birth", dobController, isDate: true),
-            const SizedBox(height: 16),
-            Row(
+      body: FutureBuilder<PersonalInfo>(
+        future: personalInfoFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          } else if (!snapshot.hasData) {
+            return const Center(child: Text("No data available"));
+          }
+
+          final personalInfo = snapshot.data!;
+          return Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _buildGenderButton(context, "Male"),
-                const SizedBox(width: 10),
-                _buildGenderButton(context, "Female"),
-              ],
-            ),
-            const SizedBox(height: 16),
-            _buildTextField("Address", addressController),
-            const Spacer(),
-            Row(
-              children: [
-                // Back Button
-                Expanded(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.pop(context); // Navigate back
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.grey,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                      ),
-                      padding: const EdgeInsets.symmetric(vertical: 16.0),
-                    ),
-                    child: const Text(
-                      "Back",
-                      style: TextStyle(color: Colors.white, fontSize: 16),
-                    ),
+                _buildTextField("Identification", idController),
+                const SizedBox(height: 16),
+                _buildTextField("Driver License", driverIDController),
+                const SizedBox(height: 16),
+                _buildTextField("Date of birth", dobController, isDate: true),
+                const SizedBox(height: 16),
+                const Text(
+                  "Gender",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.teal,
                   ),
                 ),
-                const SizedBox(width: 16.0), // Space between buttons
-                // Next Button
-                Expanded(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const MeasurementsScreen(),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.teal,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                      ),
-                      padding: const EdgeInsets.symmetric(vertical: 16.0),
-                    ),
-                    child: const Text(
-                      "Next",
-                      style: TextStyle(color: Colors.white, fontSize: 16),
-                    ),
-                  ),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    _buildGenderButton(context, "Male"),
+                    const SizedBox(width: 10),
+                    _buildGenderButton(context, "Female"),
+                  ],
                 ),
+                const SizedBox(height: 16),
+                _buildTextField("Address", addressController),
+                const Spacer(),
+                _buildNavigationButtons(context),
               ],
             ),
-            const SizedBox(height: 24.0),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
@@ -264,11 +277,65 @@ class _IdentificationScreenState extends State<IdentificationScreen> {
       child: Text(
         gender,
         style: const TextStyle(
-            color: Colors.white, fontWeight: FontWeight.w900, fontSize: 16),
+          color: Colors.white,
+          fontWeight: FontWeight.w900,
+          fontSize: 16,
+        ),
       ),
     );
   }
-}
+
+  Widget _buildNavigationButtons(BuildContext context) {
+    return Row(
+      children: [
+        // Back Button
+        Expanded(
+          child: ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context); // Navigate back
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.grey,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
+            ),
+            child: const Text(
+              "Back",
+              style: TextStyle(color: Colors.white, fontSize: 16),
+            ),
+          ),
+        ),
+        const SizedBox(width: 16.0), // Space between buttons
+        // Next Button
+        Expanded(
+          child: ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const MeasurementsScreen(),
+                ),
+              );
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.teal,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
+            ),
+            child: const Text(
+              "Next",
+              style: TextStyle(color: Colors.white, fontSize: 16),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+} // For JSON handling
 
 class MeasurementsScreen extends StatefulWidget {
   const MeasurementsScreen({super.key});
@@ -278,18 +345,16 @@ class MeasurementsScreen extends StatefulWidget {
 }
 
 class _MeasurementsScreenState extends State<MeasurementsScreen> {
-  final TextEditingController heightController =
-      TextEditingController(text: "170");
-  final TextEditingController weightController =
-      TextEditingController(text: "70");
-  final TextEditingController bmiController =
-      TextEditingController(text: "24.2");
+  final TextEditingController heightController = TextEditingController();
+  final TextEditingController weightController = TextEditingController();
+  final TextEditingController bmiController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
+    _fetchDataFromJson();
 
-    // Add listeners to update BMI when height or weight changes
+    // Fetch data when screen initializes
     heightController.addListener(_calculateBMI);
     weightController.addListener(_calculateBMI);
   }
@@ -302,9 +367,29 @@ class _MeasurementsScreenState extends State<MeasurementsScreen> {
     super.dispose();
   }
 
+  /// Simulate fetching data from a JSON object
+  Future<void> _fetchDataFromJson() async {
+    // Simulated JSON response
+    const jsonData = '''
+      {
+        "height": 170,
+        "weight": 65
+      }
+    ''';
+
+    // Parse the JSON data
+    final Map<String, dynamic> data = jsonDecode(jsonData);
+
+    // Update controllers with the fetched data
+    setState(() {
+      heightController.text = data['height'].toString();
+      weightController.text = data['weight'].toString();
+    });
+  }
+
   void _calculateBMI() {
-    final heightText = heightController.text;
-    final weightText = weightController.text;
+    final heightText = heightController.text.trim();
+    final weightText = weightController.text.trim();
 
     if (heightText.isNotEmpty && weightText.isNotEmpty) {
       final height = double.tryParse(heightText);
@@ -342,15 +427,32 @@ class _MeasurementsScreenState extends State<MeasurementsScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildTextField("Height (cm)", heightController),
+            _buildTextField(
+              label: "Height (cm)",
+              controller: heightController,
+              hintText: "Enter your height in cm",
+              icon: Icons.height,
+              inputType: TextInputType.number,
+            ),
             const SizedBox(height: 16),
-            _buildTextField("Weight (kg)", weightController),
+            _buildTextField(
+              label: "Weight (kg)",
+              controller: weightController,
+              hintText: "Enter your weight in kg",
+              icon: Icons.monitor_weight,
+              inputType: TextInputType.number,
+            ),
             const SizedBox(height: 16),
-            _buildTextField("BMI", bmiController, isReadOnly: true),
+            _buildTextField(
+              label: "BMI",
+              controller: bmiController,
+              isReadOnly: true,
+              hintText: "Your BMI will be calculated here",
+              icon: Icons.calculate,
+            ),
             const Spacer(),
             Row(
               children: [
-                // Back Button
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {
@@ -369,11 +471,19 @@ class _MeasurementsScreenState extends State<MeasurementsScreen> {
                     ),
                   ),
                 ),
-                const SizedBox(width: 16.0), // Space between buttons
-                // Next Button
+                const SizedBox(width: 16.0),
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {
+                      if (heightController.text.isEmpty ||
+                          weightController.text.isEmpty) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                              content: Text(
+                                  "Please fill in height and weight fields.")),
+                        );
+                        return;
+                      }
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -403,14 +513,22 @@ class _MeasurementsScreenState extends State<MeasurementsScreen> {
     );
   }
 
-  Widget _buildTextField(String label, TextEditingController controller,
-      {bool isReadOnly = false, bool isDate = false}) {
+  Widget _buildTextField({
+    required String label,
+    required TextEditingController controller,
+    bool isReadOnly = false,
+    String? hintText,
+    IconData? icon,
+    TextInputType inputType = TextInputType.text,
+  }) {
     return TextField(
       controller: controller,
       readOnly: isReadOnly,
-      keyboardType: isDate ? TextInputType.datetime : TextInputType.text,
+      keyboardType: inputType,
       decoration: InputDecoration(
         labelText: label,
+        hintText: hintText,
+        prefixIcon: icon != null ? Icon(icon) : null,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8.0),
         ),
