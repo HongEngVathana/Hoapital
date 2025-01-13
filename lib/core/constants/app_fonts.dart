@@ -23,7 +23,7 @@ class AppFonts {
       MediaQuery.of(context).size.width * 0.015; // Smaller body text
 
   static double getCaption(BuildContext context) =>
-      MediaQuery.of(context).size.width * 0.03; // For captions and labels
+      MediaQuery.of(context).size.width * 0.028; // For captions and labels
 
   static double getButtonText(BuildContext context) =>
       MediaQuery.of(context).size.width * 0.045; // Button text size

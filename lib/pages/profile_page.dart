@@ -58,17 +58,43 @@ class _ProfilePageState extends State<ProfilePage> {
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            CircleAvatar(
-                              radius: 50,
-                              backgroundColor: Colors.white,
-                              child: ClipOval(
-                                child: Image.asset(
-                                  profileData!['image'],
-                                  fit: BoxFit.cover,
-                                  width: 90,
-                                  height: 90,
+                            Stack(
+                              children: [
+                                CircleAvatar(
+                                  radius: 50,
+                                  backgroundColor: Colors.white,
+                                  child: ClipOval(
+                                    child: Image.asset(
+                                      profileData!['image'],
+                                      fit: BoxFit.cover,
+                                      width: 90,
+                                      height: 90,
+                                    ),
+                                  ),
                                 ),
-                              ),
+                                // Edit Icon Positioned Near Image
+                                Positioned(
+                                  bottom: 0,
+                                  right: 0,
+                                  child: IconButton(
+                                    icon: const Icon(
+                                      Icons.edit,
+                                      color: Colors.white,
+                                      size: 20,
+                                    ),
+                                    onPressed: () {
+                                      // Navigate to Edit Profile Screen
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              PersonalInfoScreen(),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ],
                             ),
                             const SizedBox(height: 10),
                             Text(
@@ -88,23 +114,6 @@ class _ProfilePageState extends State<ProfilePage> {
                           ],
                         ),
                       ),
-                // Edit Icon
-                Positioned(
-                  top: 20,
-                  right: 20,
-                  child: IconButton(
-                    icon: const Icon(Icons.edit, color: Colors.white),
-                    onPressed: () {
-                      // Navigate to Edit Profile Screen
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => PersonalInfoScreen(),
-                        ),
-                      );
-                    },
-                  ),
-                ),
               ],
             ),
           ),

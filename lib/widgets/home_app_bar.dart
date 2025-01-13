@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hospital/core/constants/app_fonts.dart';
 import 'package:hospital/core/constants/app_size.dart';
+import 'package:hospital/features/auth/views/notification_screen.dart';
+import 'package:hospital/pages/profile_page.dart';
+import 'package:remixicon/remixicon.dart';
 
 class CustomAppBar extends StatelessWidget {
   const CustomAppBar({super.key});
@@ -14,7 +17,7 @@ class CustomAppBar extends StatelessWidget {
         children: [
           // Menu Icon
           Icon(
-            Icons.sort,
+            Icons.menu,
             size: AppSizes.iconSize(context),
             color: Colors.teal,
           ),
@@ -44,18 +47,33 @@ class CustomAppBar extends StatelessWidget {
           // Notification Icon and Profile Picture
           Row(
             children: [
-              Icon(
-                Icons.notifications_none,
-                size: AppSizes.iconSize(context),
-                color: Colors.teal,
-              ),
+              IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const NotificationScreen()));
+                  },
+                  icon: Icon(
+                    Icons.notifications_active,
+                    size: AppSizes.iconSize(context),
+                    color: Colors.teal,
+                  )),
               SizedBox(width: 15),
-              // Profile Picture
-              CircleAvatar(
-                radius: AppSizes.iconSizeTwo(context),
-                backgroundImage: AssetImage(
-                    'lib/assets/images/joseph.jpeg'), // Replace with your profile image path
-              ),
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ProfilePage()),
+                  );
+                },
+                borderRadius:
+                    BorderRadius.circular(AppSizes.iconSizeTwo(context)),
+                child: CircleAvatar(
+                  radius: AppSizes.iconSizeTwo(context),
+                  backgroundImage: AssetImage('lib/assets/images/joseph.jpeg'),
+                ),
+              )
             ],
           ),
         ],

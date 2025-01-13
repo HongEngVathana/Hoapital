@@ -51,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 // Top Spacing Reduced
                 const SizedBox(height: 15),
-                const CustomAppBar(),
+                CustomAppBar(),
                 const SizedBox(height: 15),
                 const MySearchBar(),
                 const SizedBox(height: 15),
